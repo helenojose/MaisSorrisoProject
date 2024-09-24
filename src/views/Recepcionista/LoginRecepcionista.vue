@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="page-container">
     <div id="logo">
-      <img src="/public/LOGO_MS.png" alt="Logo MS">
+      <img :src="require('@/assets/images/logo.png')" alt="Logo">
     </div>
     
     <div class="box">
@@ -57,9 +57,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /* Centraliza a box de login na tela */
-body {
+.page-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -133,7 +133,6 @@ button {
   font-size: 14px; 
   margin-left: 46px;
   box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.5);
-  font-family: Lexend;
   font-weight: bold;
 }
 
@@ -167,5 +166,3 @@ h3:hover {
   color: black;
 }
 </style>
-
-
