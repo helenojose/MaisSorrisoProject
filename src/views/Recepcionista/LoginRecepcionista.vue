@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="logo">
-      <img src="img/LOGO_MS.png" alt="Logo MS">
+      <img src="/public/LOGO_MS.png" alt="Logo MS">
     </div>
     
     <div class="box">
@@ -79,13 +79,13 @@ body {
 }
 
 #logo {
-  margin-bottom: 20px; /* Espaço entre a imagem e a box */
-  text-align: center; /* Centraliza a imagem */
+  margin-bottom: 20px; 
+  text-align: center; 
 }
 
 #logo img {
-  max-width: 100%; /* Faz a imagem responsiva */
-  height: auto; /* Mantém a proporção da imagem */
+  max-width: 100%; 
+  height: auto; 
 }
 
 .box {
@@ -142,7 +142,7 @@ button:hover {
 }
 
 h1 {
-  font-size: 22px; /* Reduz o tamanho da fonte do título principal */
+  font-size: 22px; 
   margin-bottom: 15px;
 }
 
