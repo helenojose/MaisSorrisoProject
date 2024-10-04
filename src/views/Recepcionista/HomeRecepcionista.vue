@@ -7,6 +7,15 @@
 
 <script>
 export default {
-  name: 'HomeRecepcionista'
+  name: 'HomeRecepcionista',
+  created() {
+    // Verifica se o usuário está logado
+    const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+    
+    if (!isLoggedIn) {
+      // Se não estiver logado, redireciona para a página de login
+      this.$router.push('/login/recepcionista');
+    }
+  }
 };
 </script>

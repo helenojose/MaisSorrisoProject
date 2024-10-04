@@ -45,13 +45,27 @@ export default {
       password: ''
     };
   },
-  methods: {
+   methods: {
+    fazerLogin() {
+      console.log('Login recepcionista realizado com sucesso!');
+      // Salva no sessionStorage indicando que o usuário está logado
+      sessionStorage.setItem('isLoggedIn', 'true');
+      // Redireciona para a home do recepcionista
+      this.$router.push('/home/recepcionista');
+    },
     verificar() {
       if (this.username === "" || this.password === "") {
         alert("É necessário preencher todos os campos!");
       } else {
-        console.log("Usuario:" + this.username,"Senha:" +  this.password);
+        console.log("Usuario:" + this.username, "Senha:" + this.password);
       }
+    }
+  },
+  created() {
+    // Verifica se o usuário já está logado
+    const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+    if (isLoggedIn) {
+      this.$router.push('/home/recepcionista');
     }
   }
 };
