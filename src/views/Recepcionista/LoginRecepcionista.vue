@@ -38,6 +38,8 @@
 </template>
 
 <script>
+import { loginRecepcionista } from '@/services/api'; // Importa a função do serviço
+
 export default {
   data() {
     return {
@@ -45,24 +47,28 @@ export default {
       password: ''
     };
   },
-   methods: {
-    fazerLogin() {
-      console.log('Login recepcionista realizado com sucesso!');
-      // Salva no sessionStorage indicando que o usuário está logado
-      sessionStorage.setItem('isLoggedIn', 'true');
-      // Redireciona para a home do recepcionista
-      this.$router.push('/home/recepcionista');
-    },
-    verificar() {
-      if (this.username === "" || this.password === "") {
-        alert("É necessário preencher todos os campos!");
-      } else {
-        console.log("Usuario:" + this.username, "Senha:" + this.password);
+  methods: {
+    async fazerLogin() {
+      try {
+        const credenciais = {
+          username: this.username,
+          senha: this.password
+        };
+
+        // Chama a função loginRecepcionista do api.js
+        const response = await loginRecepcionista(credenciais);
+
+        console.log('Login recepcionista realizado com sucesso!', response.data);
+        // Salva no sessionStorage indicando que o usuário está logado
+        sessionStorage.setItem('isLoggedIn', 'true');
+        // Redireciona para a home do recepcionista
+        this.$router.push('/home/recepcionista');
+      } catch (error) {
+        console.error('Erro ao fazer login:', error);
       }
     }
   },
   created() {
-    // Verifica se o usuário já está logado
     const isLoggedIn = sessionStorage.getItem('isLoggedIn');
     if (isLoggedIn) {
       this.$router.push('/home/recepcionista');

@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import { cadastrarUsuario } from '@/services/api'; // Importa a função do serviço
+
 export default {
   name: 'CadastroUsuario',
   data() {
@@ -27,9 +29,23 @@ export default {
     };
   },
   methods: {
-    fazerCadastro() {
-      console.log('Cadastro realizado com sucesso!');
-      this.$router.push('/login');
+    async fazerCadastro() {
+      try {
+        // Prepara os dados para enviar à API
+        const usuario = {
+          nome: this.name,
+          email: this.email,
+          senha: this.password
+        };
+        
+        // Chama a função cadastrarUsuario do api.js
+        const response = await cadastrarUsuario(usuario);
+        
+        console.log('Cadastro realizado com sucesso!', response.data);
+        this.$router.push('/login');
+      } catch (error) {
+        console.error('Erro ao cadastrar o usuário:', error);
+      }
     }
   }
 };

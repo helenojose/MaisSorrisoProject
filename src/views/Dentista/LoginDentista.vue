@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import { loginDentista } from '@/services/api'; // Importa a função do serviço
+
 export default {
   data() {
     return {
@@ -22,12 +24,25 @@ export default {
     };
   },
    methods: {
-    fazerLogin() {
-      console.log('Login dentista realizado com sucesso!'); // Log de sucesso do login
+    async fazerLogin() {
+      try {
+        const credenciais = {
+          email: this.email,
+          senha: this.password
+        };
+
+      // Chama a função loginDentista do api.js
+      const response = await loginDentista(credenciais);
+
+      // Log de sucesso do login
+      console.log('Login dentista realizado com sucesso!', response.data); 
       // Salva no sessionStorage indicando que o usuário está logado
       sessionStorage.setItem('isLoggedIn', 'true'); 
       // Redireciona para a home do dentista
-      this.$router.push('/home/dentista'); 
+        this.$router.push('/home/dentista');
+      } catch (error) {
+        console.error('Erro ao fazer login:', error);
+      }
     }
   },
   created() {

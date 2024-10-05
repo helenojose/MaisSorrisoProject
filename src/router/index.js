@@ -13,7 +13,7 @@ const routes = [
   { path: '/login/recepcionista', name: 'LoginRecepcionista', component: LoginRecepcionista },
   { path: '/home/dentista', name: 'HomeDentista', component: HomeDentista },
   { path: '/home/recepcionista', name: 'HomeRecepcionista', component: HomeRecepcionista },
-  { path: '/', redirect: '/login' } 
+  { path: '/', redirect: '/Cadastro' } 
 ];
 
 const router = createRouter({

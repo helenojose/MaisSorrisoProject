@@ -29,11 +29,17 @@
 </template>
 
 <script>
+import { loginDentista, loginRecepcionista } from '@/services/api';
+
 export default {
   name: 'LoginEscolha', // Nome do componente
   data(){
      return {
       userType: null, // Variável para armazenar a escolha do tipo de usuário (dentista ou recepcionista)
+      credentials: {
+        email: '', // Campos de exemplo para credenciais
+        password: ''
+      }
      };
   },
   created() {
@@ -50,12 +56,33 @@ export default {
     selectUser(user) {
       this.userType = user; // Armazena o tipo de usuário selecionado
     },
-    confirmSelection() {
+    async confirmSelection() {
       if (this.userType) {
-        // Se um tipo de usuário foi selecionado, armazena no localStorage
-        localStorage.setItem('userType', this.userType);
-        // Redireciona para a página de login correspondente ao tipo de usuário
-        this.$router.push(`/login/${this.userType}`);
+        try {
+          // Seleciona a função de login baseada no tipo de usuário
+          let response;
+          if (this.userType === 'dentista') {
+            response = await loginDentista(this.credentials);
+          } else if (this.userType === 'recepcionista') {
+            response = await loginRecepcionista(this.credentials);
+          }
+
+          if (response.status === 200) {
+            // Armazena o tipo de usuário no localStorage
+            localStorage.setItem('userType', this.userType);
+            // Armazena a sessão como logada no sessionStorage
+            sessionStorage.setItem('isLoggedIn', true);
+            // Redireciona para a página home correspondente ao tipo de usuário
+            this.$router.push(`/home/${this.userType}`);
+          } else {
+            // Exibe um erro caso o login falhe
+            alert('Falha no login. Verifique suas credenciais.');
+          }
+        } catch (error) {
+          // Lida com possíveis erros da API
+          console.error('Erro ao realizar login:', error);
+          alert('Erro ao realizar login. Tente novamente.');
+        }
       } else {
         // Se nenhum tipo foi selecionado, exibe um alerta
         alert('Por favor, selecione um tipo de usuário antes de confirmar.');
