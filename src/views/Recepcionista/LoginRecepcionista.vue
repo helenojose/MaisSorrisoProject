@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { loginRecepcionista } from '@/services/api'; // Importa a função do serviço
+// import { loginRecepcionista } from '@/services/api';
 
 export default {
   data() {
@@ -48,24 +48,10 @@ export default {
     };
   },
   methods: {
-    async fazerLogin() {
-      try {
-        const credenciais = {
-          username: this.username,
-          senha: this.password
-        };
-
-        // Chama a função loginRecepcionista do api.js
-        const response = await loginRecepcionista(credenciais);
-
-        console.log('Login recepcionista realizado com sucesso!', response.data);
-        // Salva no sessionStorage indicando que o usuário está logado
-        sessionStorage.setItem('isLoggedIn', 'true');
-        // Redireciona para a home do recepcionista
-        this.$router.push('/home/recepcionista');
-      } catch (error) {
-        console.error('Erro ao fazer login:', error);
-      }
+    fazerLogin() {
+      console.log('Simulação de login recepcionista com sucesso!');
+      sessionStorage.setItem('isLoggedIn', 'true');
+      this.$router.push('/home/recepcionista');
     }
   },
   created() {

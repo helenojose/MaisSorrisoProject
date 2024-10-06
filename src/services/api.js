@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Configuração da API
 const api = axios.create({
-  baseURL: 'http://26.67.203.211:8080/teste', //URL base da sua API
+  baseURL: 'http://localhost:8080/api', //URL base da sua API
   headers: {
     'Content-Type': 'application/json',
   }

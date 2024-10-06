@@ -14,43 +14,26 @@
 </template>
 
 <script>
-import { loginDentista } from '@/services/api'; // Importa a função do serviço
+// import { loginDentista } from '@/services/api';
 
 export default {
   data() {
     return {
-      email: '', // Armazena o email do dentista
-      password: '' // Armazena a senha do dentista
+      email: '',
+      password: ''
     };
   },
-   methods: {
-    async fazerLogin() {
-      try {
-        const credenciais = {
-          email: this.email,
-          senha: this.password
-        };
-
-      // Chama a função loginDentista do api.js
-      const response = await loginDentista(credenciais);
-
-      // Log de sucesso do login
-      console.log('Login dentista realizado com sucesso!', response.data); 
-      // Salva no sessionStorage indicando que o usuário está logado
-      sessionStorage.setItem('isLoggedIn', 'true'); 
-      // Redireciona para a home do dentista
-        this.$router.push('/home/dentista');
-      } catch (error) {
-        console.error('Erro ao fazer login:', error);
-      }
+  methods: {
+    fazerLogin() {
+      console.log('Simulação de login dentista com sucesso!');
+      sessionStorage.setItem('isLoggedIn', 'true');
+      this.$router.push('/home/dentista');
     }
   },
   created() {
-    // Verifica se o usuário já está logado
-    const isLoggedIn = sessionStorage.getItem('isLoggedIn'); 
+    const isLoggedIn = sessionStorage.getItem('isLoggedIn');
     if (isLoggedIn) {
-      // Se estiver logado, redireciona para a home do dentista
-      this.$router.push('/home/dentista'); 
+      this.$router.push('/home/dentista');
     }
   }
 };
