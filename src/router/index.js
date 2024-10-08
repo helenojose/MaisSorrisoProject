@@ -4,6 +4,7 @@ import LoginDentista from '../views/Dentista/LoginDentista.vue';
 import LoginRecepcionista from '../views/Recepcionista/LoginRecepcionista.vue';
 import HomeDentista from '../views/Dentista/HomeDentista.vue';
 import HomeRecepcionista from '../views/Recepcionista/HomeRecepcionista.vue';
+import ProntuarioDentista from '../views/Dentista/ProntuarioDentista.vue';
 
 const routes = [
   { path: '/Cadastro', name: 'Cadastro', component: CadastroUsuario },
@@ -11,7 +12,8 @@ const routes = [
   { path: '/login/recepcionista', name: 'LoginRecepcionista', component: LoginRecepcionista },
   { path: '/home/dentista', name: 'HomeDentista', component: HomeDentista },
   { path: '/home/recepcionista', name: 'HomeRecepcionista', component: HomeRecepcionista },
-  { path: '/', redirect: '/Cadastro' } 
+  { path: '/', redirect: '/Cadastro' } ,
+  {path: '/prontuario/dentista', name: 'ProntuarioDentista', component: ProntuarioDentista},
 ];
 
 const router = createRouter({
