@@ -4,14 +4,21 @@
 
 <style>
 /* Remove margens do body e html */
-html, body {
-  height: 100%;
-  margin: 0;
+html{
+  height: 100%; /* Garante que o html também preencha a altura */
+} 
+
+body {
+  font-family: Lexend;
+  margin: 0; /* Remove margens padrão */
+  padding: 0; /* Remove preenchimento padrão */
+  height: 100%; /* Garante que o corpo preencha a altura */
+  overflow: hidden; /* Remove barras de rolagem, se necessário */
 }
 
 @font-face {
-  font-family: 'Lexend';
-  src: url('@/assets/fonts/Lexend.ttf') format('truetype');
+  font-family: 'Lexend-VariableFont_wght.ttf';
+  src: url('@/assets/fonts/Lexend-VariableFont_wght.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
