@@ -5,6 +5,7 @@ import LoginRecepcionista from '../views/Recepcionista/LoginRecepcionista.vue';
 import HomeDentista from '../views/Dentista/HomeDentista.vue';
 import HomeRecepcionista from '../views/Recepcionista/HomeRecepcionista.vue';
 import ProntuarioDentista from '../views/Dentista/ProntuarioDentista.vue';
+import CadastroPacientes from '../views/Recepcionista/CadastroPacientes'
 
 const routes = [
   { path: '/Cadastro', name: 'Cadastro', component: CadastroUsuario },
@@ -14,6 +15,7 @@ const routes = [
   { path: '/home/recepcionista', name: 'HomeRecepcionista', component: HomeRecepcionista },
   { path: '/', redirect: '/Cadastro' } ,
   {path: '/prontuario/dentista', name: 'ProntuarioDentista', component: ProntuarioDentista},
+  {path: '/cadastro/pacientes', name: 'CadastroPacientes', component: CadastroPacientes},
 ];
 
 const router = createRouter({
