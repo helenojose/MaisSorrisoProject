@@ -35,6 +35,9 @@ html, body {
     width: 135px;
     height: 100vh;
     background-color: #752025;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     position: fixed;
     top: 0;
     left: 0;
