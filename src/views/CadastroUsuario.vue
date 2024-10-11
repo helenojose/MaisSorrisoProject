@@ -77,9 +77,6 @@
         <p v-if="showErrorMessage" class="error-message">Por favor, selecione um tipo de usuário.</p>
         
         </div>
-         <div class="button-back">
-            <button>Voltar</button>
-          </div>
       </div>
   
 </template>
@@ -322,12 +319,6 @@ export default {
     height: 4vh;
   }
 
-  .button-back button {
-    position: absolute;
-    padding: 1px;
-    margin-top: -120px;
-    margin-left: -20px;
-  }
 }
 
 /* Para telas médias e pequenas (ex: 14 polegadas) */
@@ -361,12 +352,7 @@ export default {
     margin-bottom: 20px; /* Espaço abaixo do grupo de botões */
   }
 
-  .button-back button {
-    position: absolute;
-    padding: 1px;
-    margin-top: -85px;
-    margin-left: -20px;
-  }
+
 }
 
 /* Para telas menores que 768px, ajuste a margem se necessário */
