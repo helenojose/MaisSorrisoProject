@@ -50,7 +50,7 @@ html, body {
 }
 
 .UpSideItems img {
-    margin-top: 50px;
+    margin-top: 20px;
     width: 100px;
 }
 
@@ -60,7 +60,7 @@ html, body {
     align-items: center;
     height: 92px;
     width: 100%;
-    margin-top: 20px;
+    margin-top: 50px;
     flex-direction: column;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
