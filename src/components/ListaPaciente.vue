@@ -2,17 +2,17 @@
  <!-- Área de Conteúdo -->
  <div id="content-area">
     <!-- Cabeçalho -->
-    <div id="header" style="padding-left: 100px">
+    <div id="header">
         <h1>BEM-VINDO AO SISTEMA DE PRONTUÁRIOS!</h1>
     </div>
 
     <!-- Campo de Busca -->
-    <div id="search-container" style="padding-left: 125px">
+    <div id="search-container">
         <input type="text" placeholder="Digite o nome do paciente...">
     </div>
 
     <!-- Tabela de Prontuários -->
-    <div id="table-container" style="padding-left: 125px">
+    <div id="table-container">
         <table>
             <thead>
                 <tr>
@@ -32,7 +32,7 @@
                     <td>GABRIEL VICTOR ARAUJO VIEIRA</td>
                     <td>(XXX) XXXXX-XXXX</td>
                 </tr>
-                <!-- Outras linhas -->
+               
             </tbody>
         </table>
     </div>
@@ -63,7 +63,7 @@
     display: flex;
     flex-direction: column;
     align-items: left; /* Centraliza os elementos na esquerda */
-    padding-left: 30px;
+    padding-left: 180px;
 }
 
 /* Cabeçalho */

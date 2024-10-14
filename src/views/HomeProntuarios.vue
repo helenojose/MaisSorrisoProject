@@ -71,7 +71,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /* Layout Principal */
 #container {
     display: flex;

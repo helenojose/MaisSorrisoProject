@@ -8,7 +8,6 @@ import ProntuarioDentista from '../views/Dentista/ProntuarioDentista.vue';
 import CadastroPacientes from '../views/Recepcionista/CadastroPacientes';
 import HomeProntuarios from '../views/HomeProntuarios';
 import EditarPaciente from '../views/Recepcionista/EditarPaciente';
-
 const routes = [
   { path: '/Cadastro', name: 'Cadastro', component: CadastroUsuario },
   { path: '/login/dentista', name: 'LoginDentista', component: LoginDentista },
