@@ -2,17 +2,17 @@
  <!-- Área de Conteúdo -->
  <div id="content-area">
     <!-- Cabeçalho -->
-    <div id="header">
+    <div id="header" style="padding-left: 100px">
         <h1>BEM-VINDO AO SISTEMA DE PRONTUÁRIOS!</h1>
     </div>
 
     <!-- Campo de Busca -->
-    <div id="search-container">
+    <div id="search-container" style="padding-left: 125px">
         <input type="text" placeholder="Digite o nome do paciente...">
     </div>
 
     <!-- Tabela de Prontuários -->
-    <div id="table-container">
+    <div id="table-container" style="padding-left: 125px">
         <table>
             <thead>
                 <tr>
@@ -40,7 +40,7 @@
 
 </template>
 
-<style>
+<style scoped >
 #search-container {
     margin-top: 30px;
     width: 25%;
