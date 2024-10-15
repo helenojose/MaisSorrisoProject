@@ -29,11 +29,55 @@
         <div class="infosBody">
             <div class="dentesContainer">
                 <div class="upLineDentes">
-                    
+                    <img class="dente" src="../img/dentes/18.png" alt="">
+                    <img class="dente" src="../img/dentes/17.png" alt="">
+                    <img class="dente" src="../img/dentes/16.png" alt="">
+                    <img class="dente" src="../img/dentes/15.png" alt="">
+                    <img class="dente" src="../img/dentes/14.png" alt="">
+                    <img class="dente" src="../img/dentes/13.png" alt="">
+                    <img class="dente" src="../img/dentes/12.png" alt="">
+                    <img class="dente" src="../img/dentes/11.png" alt="">
+                    <img class="dente" src="../img/dentes/21.png" alt="">
+                    <img class="dente" src="../img/dentes/22.png" alt="">
+                    <img class="dente" src="../img/dentes/23.png" alt="">
+                    <img class="dente" src="../img/dentes/24.png" alt="">
+                    <img class="dente" src="../img/dentes/25.png" alt="">
+                    <img class="dente" src="../img/dentes/26.png" alt="">
+                    <img class="dente" src="../img/dentes/27.png" alt="">
+                    <img class="dente" src="../img/dentes/28.png" alt="">
                 </div>
+                <div style="color: rgb(189, 189, 189);" class="tracejado">-----------------------------------------------------------------------------------------------------------</div>
                 <div class="downLineDentes">
-
+                    <img class="dente" src="../img/dentes/48.png" alt="">
+                    <img class="dente" src="../img/dentes/47.png" alt="">
+                    <img class="dente" src="../img/dentes/46.png" alt="">
+                    <img class="dente" src="../img/dentes/45.png" alt="">
+                    <img class="dente" src="../img/dentes/44.png" alt="">
+                    <img class="dente" src="../img/dentes/43.png" alt="">
+                    <img class="dente" src="../img/dentes/42.png" alt="">
+                    <img class="dente" src="../img/dentes/41.png" alt="">
+                    <img class="dente" src="../img/dentes/31.png" alt="">
+                    <img class="dente" src="../img/dentes/32.png" alt="">
+                    <img class="dente" src="../img/dentes/33.png" alt="">
+                    <img class="dente" src="../img/dentes/34.png" alt="">
+                    <img class="dente" src="../img/dentes/35.png" alt="">
+                    <img class="dente" src="../img/dentes/36.png" alt="">
+                    <img class="dente" src="../img/dentes/37.png" alt="">
+                    <img class="dente" src="../img/dentes/38.png" alt="">
                 </div>
+
+            </div>
+            <div class="radiografia">
+                <span style="color:rgb(189, 189, 189) ; font-size: 24px;">RADIOGRAFIAS</span>
+                <i class="bi bi-file-earmark-plus-fill"></i>
+            </div>
+        </div>
+        <div class="informationContainers">
+            <div style="width: 480px; display: flex; flex-direction: column; align-items: center;" >
+                <span class="infoText">
+                    CLIQUE NOS CAMPOS CIRCULARES NOS DENTES, PARA FAZER ALTERAÇÕES NO ODONTOGRAMA.
+                </span>
+                <button class="salvarTudoBtn">SALVAR TUDO</button>
             </div>
         </div>
     </div>
@@ -61,27 +105,50 @@
 </script>
 
 <style scoped>
+
+    .radiografia{
+        height: 380px;
+        width: 300px;
+        background-color: #fff4b4;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .downLineDentes{
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+    }
     .upLineDentes{
         height: 100px;
         display: flex;
         justify-content: center;
         align-items: center;
+        gap: 8px;
     }
     .dente{
         display: flex;
-        height: 30px;
+        height: 70px;
     }
     .dentesContainer{
         display: flex;
-        height: 300px;
-        width: 850px;
-        background-color: aqua;
+        height: 200px;
+        width: fit-content;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        /*background-color: aqua;*/
     }
     .infosContainer{
-        background-color: rgb(223, 223, 223);
-        height: 500px;
-        width: 1000px;
-        border-radius: 20px
+        background-color: #f1f0f0;
+        height: 750px;
+        width: 1150px;
+        border-radius: 20px;
     }
     .header{
         background-color: rgb(202, 201, 201) ;
@@ -128,9 +195,43 @@
         font-weight: bolder;
     }
     .infosBody{
-        height: 75%;
+        height: 65%;
         display: flex;
         justify-content: center;
         align-items: center;
+        gap: 60px;
+    }
+    .informationContainers{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .infoText{
+        color:#535355 ;
+        font-size: 18px;
+    }
+    .salvarTudoBtn{
+        margin-top: 25px;
+        width: 150px;
+        height: 40px;
+        color: white;
+        background-color: rgb(82, 199, 98);
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        -webkit-box-shadow: -4px 3px 10px -1px rgba(0,0,0,0.73);
+        -moz-box-shadow: -4px 3px 10px -1px rgba(0,0,0,0.73);
+        box-shadow: -4px 3px 10px -1px rgba(0,0,0,0.73);
+        font-size: small;
+        font-weight: bolder;
+
+    }
+    .salvarTudoBtn:hover{
+        background-color: rgb(106, 221, 121);
+    }
+    .bi-file-earmark-plus-fill{
+        color: rgb(189, 189, 189);
+        font-size: 100px;
     }
 </style>
