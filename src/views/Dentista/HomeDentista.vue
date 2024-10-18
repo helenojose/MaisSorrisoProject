@@ -15,15 +15,15 @@ import SideBar from '../../components/SideBarProntuario.vue';
 
 export default {
     name: "HomeDentista",
-    created() {
+    //created() {
     // Verifica se o usuário está logado
-    const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+    //const isLoggedIn = sessionStorage.getItem('isLoggedIn');
     
-    if (!isLoggedIn) {
+    //if (!isLoggedIn) {
       // Se não estiver logado, redireciona para a página de login
-      this.$router.push('/login/dentista');
-    }
-},
+      //this.$router.push('/login/dentista');
+    //}
+//},
     components: {
         ListaPaciente,SideBar
     },
