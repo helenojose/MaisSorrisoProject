@@ -15,7 +15,7 @@
             id="user" 
             type="text" 
             placeholder="USUÁRIO" 
-            v-model="username"
+            v-model="login"
           />
         </div>
 
@@ -24,7 +24,7 @@
             id="password" 
             type="password" 
             placeholder="SENHA" 
-            v-model="password"
+            v-model="senha"
           />
         </div>
 
@@ -44,25 +44,32 @@
 </template>
 
 <script>
-// import { loginDentista } from '@/services/api';
+import { loginDentista } from '@/services/api'; // Importa a função de login
 
 export default {
   data() {
     return {
-      email: '',
-      password: ''
+      login: '',
+      senha: ''
     };
   },
   methods: {
-    verificar() {
-      const userData = JSON.parse(localStorage.getItem('userData'));
+    async verificar() {
+      try {
+        const credenciais = {
+          login: this.login,
+          senha: this.senha
+        };
 
-      if (userData && userData.userType === 'dentista' && this.username === userData.username && this.password === userData.password) {
-        // Login com sucesso
+        // Faz a requisição de login para a API
+        await loginDentista(credenciais);
+
+        // Armazena a sessão e redireciona para a home do dentista
         sessionStorage.setItem('isLoggedIn', 'true');
         this.$router.push('/home/dentista');
-      } else {
+      } catch (error) {
         alert('Usuário ou senha incorretos!');
+        console.error('Erro ao fazer login:', error);
       }
     }
   },

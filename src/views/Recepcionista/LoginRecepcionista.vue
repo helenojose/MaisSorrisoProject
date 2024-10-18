@@ -45,7 +45,7 @@
 </template>
 
 <script>
-// import { loginRecepcionista } from '@/services/api';
+import { loginRecepcionista } from '@/services/api';
 
 export default {
   data() {
@@ -54,16 +54,23 @@ export default {
       password: ''
     };
   },
- methods: {
-    verificar() {
-      const userData = JSON.parse(localStorage.getItem('userData'));
+  methods: {
+    async verificar() {
+      try {
+        const credenciais = {
+          username: this.username,
+          password: this.password
+        };
 
-      if (userData && userData.userType === 'recepcionista' && this.username === userData.username && this.password === userData.password) {
-        // Login com sucesso
+        // Faz a requisição de login para a API
+        await loginRecepcionista(credenciais);
+
+        // Armazena a sessão e redireciona para a home do recepcionista
         sessionStorage.setItem('isLoggedIn', 'true');
         this.$router.push('/home/recepcionista');
-      } else {
+      } catch (error) {
         alert('Usuário ou senha incorretos!');
+        console.error('Erro ao fazer login:', error);
       }
     }
   },

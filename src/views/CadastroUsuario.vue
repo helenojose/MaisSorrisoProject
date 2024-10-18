@@ -8,12 +8,12 @@
           <h1>NOVA CONTA</h1>
           <p>PREENHA AS INFORMAÇÕES ABAIXO, E SELECIONE O TIPO DE CADASTRO QUE DESEJA CRIAR</p>
         </div>
-        <form @submit.prevent="fazerCadastro">
+        <form @submit.prevent="cadastrarUsuario">
 
           <div class="group-input">
             <div>
               <input 
-                v-model="name" 
+                v-model="nome" 
                 type="text" 
                 id="name" 
                 required 
@@ -23,7 +23,7 @@
             
             <div>
               <input 
-                v-model="username"
+                v-model="login"
                 type="username"
                 id="username" 
                 required 
@@ -43,7 +43,7 @@
 
             <div>
               <input 
-                v-model="password"
+                v-model="senha"
                 type="password"
                 id="password" 
                 required 
@@ -56,15 +56,15 @@
             <div class="button-group"> 
               <div class="dentista">
                 <button 
-                :class="{ selected: userType === 'dentista' }" 
+                :class="{ selected: userType === 1 }" 
                 type="button"  
-                @click="selectUser('dentista')">Dentista</button>
+                @click="selectUser(1)">Dentista</button>
               </div>
               <div class="recep">
                 <button 
-                :class="{ selected: userType === 'recepcionista' }" 
+                :class="{ selected: userType === 2 }" 
                 type="button" 
-                @click="selectUser('recepcionista')">Recepcionista</button>
+                @click="selectUser(2)">Recepcionista</button>
               </div>
               </div>
               <div class="button-register">
@@ -82,58 +82,56 @@
 </template>
 
 <script>
+import { cadastrarUsuario } from '../services/api';
+
 export default {
   name: 'CadastroUsuario',
   data() {
     return {
-      name: '',
-      username: '',
+      nome: '',
+      login: '',
       email: '',
-      password: '',
-      userType: null, // Tipo de usuário selecionado (dentista ou recepcionista)
-      showErrorMessage: false // Controle de exibição da mensagem de erro
+      senha: '',
+      userType: '',
+      showErrorMessage: false,
     };
   },
-  created() {
-    const savedUserType = localStorage.getItem('userType');
-    const isLoggedIn = sessionStorage.getItem('isLoggedIn');
-    
-    // Redireciona diretamente para a home se o usuário já estiver logado
-    if (savedUserType && isLoggedIn) {
-      this.$router.push(`/home/${savedUserType}`);
-    }
-  },
   methods: {
-    // Método para selecionar o tipo de usuário
-    selectUser(user) {
-      this.userType = user;
-      this.showErrorMessage = false; // Remove a mensagem de erro ao selecionar um usuário
+    selectUser(type) {
+      this.userType = type;
+      this.showErrorMessage = false; // Oculta a mensagem de erro ao selecionar o tipo de usuário
     },
-    // Método para realizar o cadastro
-    fazerCadastro() {
+    async cadastrarUsuario() {
       if (this.userType) {
-        // Salvar as informações do usuário no localStorage
-        const userData = {
-          name: this.name,
-          username: this.username,
+        // Crie o objeto com os dados do usuário
+        const usuario = {
+          nome: this.nome,
+          login: this.login,
           email: this.email,
-          password: this.password,
-          userType: this.userType
+          senha: this.senha,
+          userType: this.userType,
         };
-        localStorage.setItem('userData', JSON.stringify(userData));
-        localStorage.setItem('userType', this.userType);
+        try {
+          // Chame a função de cadastro da API
+          await cadastrarUsuario(usuario);
+          // Armazene as informações localmente após o sucesso
+          localStorage.setItem('userData', JSON.stringify(usuario));
+          localStorage.setItem('userType', this.userType);
 
-        // Redireciona para a página de login correspondente
-        if (this.userType === 'dentista') {
-          this.$router.push('/login/dentista'); // Vai para a tela de login do dentista
-        } else if (this.userType === 'recepcionista') {
-          this.$router.push('/login/recepcionista'); // Vai para a tela de login do recepcionista
+          // Redirecione com base no tipo de usuário
+          if (this.userType === 1) {
+            this.$router.push('/login/dentista');
+          } else if (this.userType === 2) {
+            this.$router.push('/login/recepcionista');
+          }
+        } catch (error) {
+          console.error('Erro ao cadastrar usuário:', error);
         }
       } else {
-        this.showErrorMessage = true; // Exibe a mensagem de erro se nenhum tipo de usuário foi selecionado
+        this.showErrorMessage = true; // Exibe mensagem de erro se o tipo de usuário não foi selecionado
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
