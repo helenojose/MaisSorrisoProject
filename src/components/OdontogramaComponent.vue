@@ -73,11 +73,15 @@
             </div>
         </div>
         <div class="informationContainers">
-            <div style="width: 480px; display: flex; flex-direction: column; align-items: center;" >
+            <div style="width: 480px; display: flex; flex-direction: column; align-items: center; margin-left: 300px;" >
                 <span class="infoText">
                     CLIQUE NOS CAMPOS CIRCULARES NOS DENTES, PARA FAZER ALTERAÇÕES NO ODONTOGRAMA.
                 </span>
                 <button class="salvarTudoBtn">SALVAR TUDO</button>
+            </div>
+            <div style="margin-left: auto; display: flex; align-items: center; gap: 20px; cursor: pointer;">
+                <span style="color: #752025; font-weight: bolder; font-size: 24px;">VERSO</span>
+                <i class="bi bi-arrow-right-square-fill"></i>
             </div>
         </div>
     </div>
@@ -106,6 +110,11 @@
 
 <style scoped>
 
+    .bi-arrow-right-square-fill{
+        color: #752025;
+        margin-right: 30px;
+        font-size: 40px;
+    }
     .radiografia{
         height: 380px;
         width: 300px;
