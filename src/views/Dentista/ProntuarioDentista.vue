@@ -3,6 +3,7 @@
         <SideBar/> 
         <div class="screenContainer">
             <Odontograma/>
+
         </div>
     </div>
 </template>
@@ -11,11 +12,13 @@
 import SideBar from '../../components/SideBarProntuario.vue';
 import Odontograma from '../../components/OdontogramaComponent.vue';
 
+
 export default {
     name: "ProntuarioDentista",
     components: {
         SideBar,
-        Odontograma
+        Odontograma,
+
     },
 };
 </script>

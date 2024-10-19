@@ -28,23 +28,11 @@
         </div>
         <div class="infosBody">
             <div class="dentesContainer">
-                <div class="upLineDentes">
-                    <img class="dente" src="../img/dentes/18.png" alt="">
-                    <img class="dente" src="../img/dentes/17.png" alt="">
-                    <img class="dente" src="../img/dentes/16.png" alt="">
-                    <img class="dente" src="../img/dentes/15.png" alt="">
-                    <img class="dente" src="../img/dentes/14.png" alt="">
-                    <img class="dente" src="../img/dentes/13.png" alt="">
-                    <img class="dente" src="../img/dentes/12.png" alt="">
-                    <img class="dente" src="../img/dentes/11.png" alt="">
-                    <img class="dente" src="../img/dentes/21.png" alt="">
-                    <img class="dente" src="../img/dentes/22.png" alt="">
-                    <img class="dente" src="../img/dentes/23.png" alt="">
-                    <img class="dente" src="../img/dentes/24.png" alt="">
-                    <img class="dente" src="../img/dentes/25.png" alt="">
-                    <img class="dente" src="../img/dentes/26.png" alt="">
-                    <img class="dente" src="../img/dentes/27.png" alt="">
-                    <img class="dente" src="../img/dentes/28.png" alt="">
+                <div  class="upLineDentes">
+                    <div v-for="dente in lineUpDentes" :key="dente.numDente" style="display: flex;">
+                        <img class="dente" src="dente.caminhoImg" alt="">
+                        <PopUpDente x="250"/>
+                    </div>
                 </div>
                 <div style="color: rgb(189, 189, 189);" class="tracejado">-----------------------------------------------------------------------------------------------------------</div>
                 <div class="downLineDentes">
@@ -88,9 +76,21 @@
 </template>
 
 <script>
+    import PopUpDente from '../components/PopUpDente.vue'
+    import dentes1 from '../utils/dentes1.json'
+    import dentes2 from '../utils/dentes2.json'
+
     export default {
         data(){
-
+            return{
+                denteXPosition: String,
+                denteYPosition: String,
+                lineUpDentes: [],
+                lineDownDentes: []
+            }
+        },
+        components: {
+            PopUpDente
         },
         props: {
             nome: String,
@@ -103,6 +103,12 @@
         },
         methods: {
 
+        },
+        async mounted(){
+            this.lineUpDentes = await dentes1
+            this.lineDownDentes = await dentes2
+            console.log(dentes1)
+            console.log(dentes2)
         }
     }
 
