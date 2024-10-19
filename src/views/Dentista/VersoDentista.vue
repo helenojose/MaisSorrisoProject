@@ -2,28 +2,30 @@
     <div class="container">
       <SideBarProntuario />
       <div class="area">
-        <table id="tabela">
-          <thead>
-            <tr>
-              <th>Data</th>
-              <th>Dente</th>
-              <th>Tratamentos Realizados</th>
-              <th>Dentista</th>
-              <th>Valor</th>
-              
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(linha, index) in linhas" :key="index">
-              <td><input type="date" v-model="linha.data" /></td>
-              <td><input type="text" v-model="linha.dente" /></td>
-              <td><input type="text" v-model="linha.tratamento" /></td>
-              <td><input type="text" v-model="linha.dentista" /></td>
-              <td><input type="text" v-model="linha.valor" /></td>
-              <td><button @click="removerLinha(index)">EXCLUIR</button></td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="tabela-container"> <!-- Adicionamos um contêiner para a tabela -->
+          <table id="tabela">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Dente</th>
+                <th>Tratamentos Realizados</th>
+                <th>Dentista</th>
+                <th>Valor</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(linha, index) in linhas" :key="index">
+                <td><input type="date" v-model="linha.data" /></td>
+                <td><input type="text" v-model="linha.dente" /></td>
+                <td><input type="text" v-model="linha.tratamento" /></td>
+                <td><input type="text" v-model="linha.dentista" /></td>
+                <td><input type="text" v-model="linha.valor" /></td>
+                <td><button @click="removerLinha(index)">EXCLUIR</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div>
           <button @click="adicionarLinha">ADICIONAR</button>
         </div>
@@ -73,6 +75,12 @@
     padding: 20px;
     width: 85%;
     margin-left: 100px;
+  }
+  
+  /* Adicionando um contêiner para a tabela com limite de altura */
+  .tabela-container {
+    max-height: 300px; /* Defina a altura máxima da tabela */
+    overflow-y: auto;  /* Adiciona barra de rolagem vertical */
   }
   
   #tabela {
