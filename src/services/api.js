@@ -30,4 +30,26 @@ export const loginRecepcionista = (credenciais) => {
   return api.post('/login/recepcionista', credenciais); //endpoint de login para recepcionista
 };
 
+// Função para cadastrar um paciente
+export const cadastrarPaciente = async (paciente) => {
+  try {
+    const response = await api.post('/paciente', paciente);
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao fazer o cadastro do paciente:', error);
+    throw error;
+  }
+};
+
+// Método para buscar todos os pacientes
+export const getPacientes = async () => {
+  try {
+    const response = await api.get("/pacientes");
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao buscar pacientes:", error);
+    throw error;
+  }
+};
+
 export default api;

@@ -1,73 +1,103 @@
 <template>
   <div id="container">
-    
     <!-- Barra Lateral -->
     <div id="barra_lateral">
-        <div class="logo">
-            <img src="/src/img/Sidebar/LogoSorriso.png" alt="Logo">
-        </div>
-       
-        <nav>
-          <!-- Icones-->
-            <ul>
-                <li>Home</li>
-                <li>Cadastro de pacientes</li>
-                <li>Atendimentos</li>
-                <li>Sair</li>
-            </ul>
-        </nav>
+      <div class="logo">
+        <img src="/src/img/Sidebar/LogoSorriso.png" alt="Logo" />
+      </div>
+
+      <nav>
+        <ul>
+            <li @click="irParaHome">Home</li>
+            <li @click="irParaCadastroPacientes">Cadastro de Pacientes</li>
+            <li @click="irParaAtendimentos">Atendimentos</li>
+            <li @click="fazerLogout">Sair</li>
+        </ul>
+      </nav>
     </div>
 
     <!-- Área de Conteúdo -->
     <div id="content-area">
-        <!-- Cabeçalho -->
-        <div id="header">
-            <h1>BEM-VINDO AO SISTEMA DE PRONTUÁRIOS!</h1>
-        </div>
+      <!-- Cabeçalho -->
+      <div id="header">
+        <h1>BEM-VINDO AO SISTEMA DE PRONTUÁRIOS!</h1>
+      </div>
 
-        <!-- Campo de Busca -->
-        <div id="search-container">
-            <input type="text" placeholder="Digite o nome do paciente...">
-        </div>
+      <!-- Campo de Busca -->
+      <div id="search-container">
+        <input type="text" placeholder="Digite o nome do paciente..." v-model="search" />
+      </div>
 
-        <!-- Tabela de Prontuários -->
-        <div id="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th id="ficha">Fichas</th>
-                        <th id="pacientes">Pacientes</th>
-                        <th id="contato">Contato</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(paciente, index) in pacientes" :key="index">
-                        <td>Nº {{ paciente.ficha }}</td>
-                        <td>{{ paciente.nomeCompleto }}</td>
-                        <td>{{ paciente.telefone }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+      <!-- Tabela de Prontuários -->
+      <div id="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th id="ficha">Fichas</th>
+              <th id="pacientes">Pacientes</th>
+              <th id="contato">Contato</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(paciente, index) in filteredPacientes" :key="index">
+              <td>Nº {{ paciente.ficha }}</td>
+              <td>{{ paciente.nomeCompleto }}</td>
+              <td>{{ paciente.telefone }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { getPacientes } from '../services/api';
+
 export default {
   data() {
     return {
       pacientes: [], // Armazena os pacientes
+      search: "", // Termo de busca
     };
   },
-  mounted() {
-    // Aqui você pode adicionar a lógica para adicionar o paciente ao array
-    const { ficha, nomeCompleto, telefone } = this.$route.params;
-
-    if (ficha && nomeCompleto && telefone) {
-      this.pacientes.push({ ficha, nomeCompleto, telefone });
+  computed: {
+    filteredPacientes() {
+      return this.pacientes.filter((paciente) =>
+        paciente.nomeCompleto.toLowerCase().includes(this.search.toLowerCase())
+      );
+    },
+  },
+  async mounted() {
+    try {
+      // Buscando os pacientes da API
+      const response = await getPacientes();
+      this.pacientes = response;
+    } catch (error) {
+      console.error("Erro ao carregar pacientes:", error);
     }
   },
+  methods: {
+    irParaCadastroPacientes() {
+      this.$router.push({ name: 'CadastroPacientes' });
+    },
+    irParaAtendimentos() {
+      // Caso a rota de atendimentos já esteja definida
+      this.$router.push({ name: 'Atendimentos' });
+    },
+    fazerLogout() {
+      const userType = localStorage.getItem('userType');
+      
+      if (userType === '1') {
+        this.$router.push({ name: 'LoginDentista' });
+      } else if (userType === '2') {
+        this.$router.push({ name: 'LoginRecepcionista' });
+      }
+      
+      // Limpar o tipo de usuário do localStorage
+      localStorage.removeItem('userType');
+    }
+  }
 };
 </script>
 

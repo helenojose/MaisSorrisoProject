@@ -18,7 +18,7 @@ const routes = [
   { path: '/', redirect: '/Cadastro' } ,
   {path: '/prontuario/dentista', name: 'ProntuarioDentista', component: ProntuarioDentista},
   {path: '/cadastro/pacientes', name: 'CadastroPacientes', component: CadastroPacientes},
-  {path: '/home/prontuarios/:ficha/:nomeCompleto/:telefone', name: 'HomeProntuarios', component: HomeProntuarios, props: true},
+  {path: '/home/prontuarios', name: 'HomeProntuarios', component: HomeProntuarios},
   {path: '/editar/paciente', name: 'EditarPaciente', component: EditarPaciente},
   {path: '/Versodentista', name: 'Versodentista', component: VersoDentista}
 ];

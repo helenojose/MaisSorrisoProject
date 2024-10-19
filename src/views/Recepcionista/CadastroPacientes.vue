@@ -69,8 +69,10 @@
   </div>
 </template>
 
+
 <script>
-import SideBar from '../../components/SideBarProntuario.vue';
+import SideBar from "../../components/SideBarProntuario.vue";
+import { cadastrarPaciente } from "../../services/api";
 
 export default {
   components: {
@@ -79,53 +81,54 @@ export default {
   data() {
     return {
       form: {
-        nomeCompleto: '',
-        dataNascimento: '',
-        cpf: '',
-        cpfResponsavel: '',
-        telefone: '',
-        sexo: '',
+        nomeCompleto: "",
+        dataNascimento: "",
+        cpf: "",
+        cpfResponsavel: "",
+        telefone: "",
+        sexo: "",
       },
-      fichaCounter: 1, // Adicionando contador de fichas
+      fichaCounter: 1, // Contador de fichas
     };
   },
   methods: {
-    cadastrarPaciente() {
-      // Verificação básica
+    async cadastrarPaciente() {
       if (this.form.nomeCompleto && this.form.dataNascimento && this.form.telefone && this.form.sexo) {
-        // Lógica para cadastrar o paciente
-        console.log('Paciente cadastrado:', this.form);
+        try {
+          const paciente = {
+            nomeCompleto: this.form.nomeCompleto,
+            dataNascimento: this.form.dataNascimento,
+            cpf: this.form.cpf,
+            cpfResponsavel: this.form.cpfResponsavel,
+            telefone: this.form.telefone,
+            sexo: this.form.sexo,
+            ficha: this.fichaCounter, // Número da ficha
+          };
 
-        // Redireciona após o cadastro
-        this.$router.push({
-          name: 'HomeProntuarios', // Nome da rota que você definiu
-          params: {
-            ficha: this.fichaCounter, // Passando o número da ficha sequencial
-            nomeCompleto: this.form.nomeCompleto, // Passando o nome completo
-            telefone: this.form.telefone, // Passando o telefone
-          },
-        });
+          // Enviando os dados do paciente para a API
+          await cadastrarPaciente(paciente);
 
-        // Incrementa o contador de ficha
-        this.incrementFichaCounter();
+          // Redireciona para HomeProntuarios após o cadastro
+          this.$router.push({ name: "HomeProntuarios" });
 
-        // Limpar o formulário após o cadastro
-        this.resetForm();
+          this.fichaCounter += 1; // Incrementa o contador de ficha
+
+          this.resetForm(); // Limpa o formulário
+        } catch (error) {
+          console.error("Erro ao cadastrar paciente:", error);
+        }
       } else {
-        alert('Preencha todos os campos obrigatórios.');
+        alert("Preencha todos os campos obrigatórios.");
       }
-    },
-    incrementFichaCounter() {
-      this.fichaCounter += 1; // Incrementa o número da ficha
     },
     resetForm() {
       this.form = {
-        nomeCompleto: '',
-        dataNascimento: '',
-        cpf: '',
-        cpfResponsavel: '',
-        telefone: '',
-        sexo: '',
+        nomeCompleto: "",
+        dataNascimento: "",
+        cpf: "",
+        cpfResponsavel: "",
+        telefone: "",
+        sexo: "",
       };
     },
   },
