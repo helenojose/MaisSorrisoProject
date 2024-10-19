@@ -1,144 +1,128 @@
 <template>
-<div class="container">
-    <SideBarProntuario/>
-    <div class="area">
+    <div class="container">
+      <SideBarProntuario />
+      <div class="area">
         <table id="tabela">
-            <thead>
-                <tr>
-                    <th>Data</th>
-                    <th>Dente</th>
-                    <th>Tratamentos Realizados</th>
-                    <th>Dentista</th>
-                    <th>Valor</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input type="date"></td>
-                    <td><input type="text"></td>
-                    <td><input type=""></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                </tr>
-                <tr>
-                    <td><input type="date"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                </tr>
-                <tr>
-                    <td><input type="date"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                </tr>
-                <tr>
-                    <td><input type="date"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                </tr>
-                <tr>
-                    <td><input type="date"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                </tr>
-                <tr>
-                    <td><input type="date"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                </tr>
-                <tr>
-                    <td><input type="date"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                </tr>
-
-            </tbody>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Dente</th>
+              <th>Tratamentos Realizados</th>
+              <th>Dentista</th>
+              <th>Valor</th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(linha, index) in linhas" :key="index">
+              <td><input type="date" v-model="linha.data" /></td>
+              <td><input type="text" v-model="linha.dente" /></td>
+              <td><input type="text" v-model="linha.tratamento" /></td>
+              <td><input type="text" v-model="linha.dentista" /></td>
+              <td><input type="text" v-model="linha.valor" /></td>
+              <td><button @click="removerLinha(index)">EXCLUIR</button></td>
+            </tr>
+          </tbody>
         </table>
-
-        <div class="observacoes">
-            <label for="observacoes">Observações do Paciente:</label>
-            <textarea id="observacoes" rows="4"></textarea>
+        <div>
+          <button @click="adicionarLinha">ADICIONAR</button>
         </div>
-        
+        <div class="observacoes">
+          <label for="observacoes">Observações do Paciente:</label>
+          <textarea id="observacoes" rows="4"></textarea>
+        </div>
+        <button>SALVAR</button>
+      </div>
     </div>
-    </div>
-    </template>
-
-    <script>
-import SideBarProntuario from '@/components/SideBarProntuario.vue';
-export default{
-    name:'VersoDentista',
-    components:{SideBarProntuario
-
-    }
-}
-</script>
-<style scoped>
-.container {
+  </template>
+  
+  <script>
+  import SideBarProntuario from '@/components/SideBarProntuario.vue';
+  
+  export default {
+    name: 'VersoDentista',
+    components: { SideBarProntuario },
+    data() {
+      return {
+        linhas: [
+          { data: '', dente: '', tratamento: '', dentista: '', valor: '' },
+        ],
+      };
+    },
+    methods: {
+      adicionarLinha() {
+        this.linhas.push({ data: '', dente: '', tratamento: '', dentista: '', valor: '' });
+      },
+      removerLinha(index) {
+        this.linhas.splice(index, 1); // Remove a linha no índice especificado
+      },
+    },
+  };
+  </script>
+  
+  <style scoped>
+  .container {
     display: flex;
-    justify-content: center; /* Centraliza a área horizontalmente */
+    justify-content: center;
     padding-top: 20px;
-}
-
-.area {
+  }
+  
+  .area {
     background-color: #ccc;
     border-radius: 20px;
     padding: 20px;
-    width: 85%; /* Aumenta a área */
-    margin-left: 100px; /* Garante espaçamento da sidebar */
-}
-
-#tabela {
-    width: 100%; /* Tabela ocupa toda a área disponível */
+    width: 85%;
+    margin-left: 100px;
+  }
+  
+  #tabela {
+    width: 100%;
     border-collapse: collapse;
     margin: 0 auto;
-}
-
- td {
+  }
+  
+  td {
     padding: 12px;
     text-align: left;
     border: 2px solid black;
-}
-
-input {
-    width: 100%; /* Inputs ocupam todo o espaço da célula */
+  }
+  
+  input {
+    width: 100%;
     height: 100%;
-    box-sizing: border-box; /* Inclui padding e border no tamanho total do input */
-}
-
-.observacoes {
+    box-sizing: border-box;
+  }
+  
+  .observacoes {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centraliza o label e o textarea */
+    align-items: center;
     margin-top: 20px;
-    background-color: white;
+    background-color: #ccc;
     padding: 20px;
-    
-}
-
-textarea {
+  }
+  
+  textarea {
     width: 100%;
     margin-top: 10px;
     padding: 10px;
     border: 1px solid #ddd;
     resize: none;
-}
-
-label {
+  }
+  
+  label {
     font-weight: bold;
     margin-bottom: 10px;
     text-align: center;
-}
-
-</style>
+  }
+  
+  button {
+    border-radius: 20px;
+  }
+  
+  button:hover {
+    background-color: #a90000;
+    transform: scale(1.08);
+  }
+  </style>
+  
