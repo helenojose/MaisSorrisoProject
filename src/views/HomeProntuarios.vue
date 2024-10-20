@@ -40,9 +40,9 @@
           </thead>
           <tbody>
             <tr v-for="(paciente, index) in filteredPacientes" :key="index">
-              <td>Nº {{ paciente.ficha }}</td>
-              <td>{{ paciente.nomeCompleto }}</td>
-              <td>{{ paciente.telefone }}</td>
+              <td>Nº {{ paciente.codPaciente }}</td>
+              <td>{{ paciente.nome }}</td>
+              <td>{{ paciente.contato }}</td>
             </tr>
           </tbody>
         </table>
@@ -64,7 +64,7 @@ export default {
   computed: {
     filteredPacientes() {
       return this.pacientes.filter((paciente) =>
-        paciente.nomeCompleto.toLowerCase().includes(this.search.toLowerCase())
+        paciente.nome.toLowerCase().includes(this.search.toLowerCase())
       );
     },
   },

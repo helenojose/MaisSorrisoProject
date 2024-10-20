@@ -27,7 +27,7 @@ export const loginDentista = (credenciais) => {
 
 // Função para login de recepcionista
 export const loginRecepcionista = (credenciais) => {
-  return api.post('/login/recepcionista', credenciais); //endpoint de login para recepcionista
+  return api.post('/login', credenciais); //endpoint de login para recepcionista
 };
 
 // Função para cadastrar um paciente
@@ -44,12 +44,22 @@ export const cadastrarPaciente = async (paciente) => {
 // Método para buscar todos os pacientes
 export const getPacientes = async () => {
   try {
-    const response = await api.get("/pacientes");
+    const response = await api.get("/paciente");
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar pacientes:", error);
     throw error;
   }
+};
+
+  export const putEditar = async (codPaciente, paciente) => {
+    try {
+      const response = await api.put("/paciente/${id}", paciente);
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao editar pacientes:", error);
+      throw error;
+    }
 };
 
 export default api;

@@ -1,68 +1,95 @@
 <template>
   <div class="container">
-      <div>
-        <SideBar/>
-      </div>
-      <div class="Content-body">
-          
-        <form @submit.prevent="cadastrarPaciente" class="form-container">
-          <h2>NOVO CADASTRO</h2>
+    <div>
+      <SideBar />
+    </div>
+    <div class="Content-body">
+      <form @submit.prevent="editarPaciente" class="form-container">
+        <h2>EDITANDO PACIENTE</h2>
+        <div class="content-register">
+          <h5 class="no-margin">
+            Os campos obrigatórios estarão com um asterisco vermelho
+            <span class="asterisk">(*)</span>
+          </h5>
+          <hr class="tight-hr" />
+        </div>
 
-          <div class="content-register">
-            <h5 class="no-margin">
-              Os campos obrigatórios estarão com um asterisco vermelho
-              <span class="asterisk">(*)</span>
-            </h5>
-            <hr class="tight-hr" />
-            <p class=" center-text tight-paragraph">
-              <span class="obs-text">OBS:</span>
-              <span class="obs-description">(Em caso da criança não possuir CPF, cadastre o do Responsável)</span>
-            </p>
-          </div>
-         
+        <div class="form-group">
+          <label for="nomeCompleto">Nome Completo <span class="asterisk">*</span></label>
+          <input
+            type="text"
+            id="nomeCompleto"
+            class="form-control"
+            v-model="form.nome"
+            required
+          />
+        </div>
 
-       
-          <div class="form-group">
-            <label for="nomeCompleto">Nome Completo <span class="asterisk">*</span></label>
-            <input type="text" v-model="form.nomeCompleto" id="nomeCompleto" placeholder="Digite o nome completo" required />
-          </div>
+        <div class="form-group">
+          <label for="dataNascimento">Data de Nascimento <span class="asterisk">*</span></label>
+          <input
+            type="date"
+            id="dataNascimento"
+            class="form-control"
+            v-model="form.dataNascimento"
+            required
+          />
+        </div>
 
-          <div class="form-group">
-            <label for="dataNascimento">Data de Nascimento <span class="asterisk">*</span></label>
-            <input type="date" v-model="form.dataNascimento" id="dataNascimento" required />
-          </div>
+        <div class="form-group">
+          <label for="cpf">CPF</label>
+          <input
+            type="text"
+            id="cpf"
+            class="form-control"
+            v-model="form.cpf"
+          />
+        </div>
 
-          <div class="form-group">
-            <label for="cpf">CPF</label>
-            <input type="text" v-model="form.cpf" id="cpf" placeholder="Digite o CPF" />
-          </div>
+        <div class="form-group">
+          <label for="cpfResponsavel">CPF do Responsável</label>
+          <input
+            type="text"
+            id="cpfResponsavel"
+            class="form-control"
+            v-model="form.cpfResponsavel"
+          />
+        </div>
 
-          <div class="form-group">
-            <label for="cpfResponsavel">CPF do Responsável</label>
-            <input type="text" v-model="form.cpfResponsavel" id="cpfResponsavel" placeholder="Digite o CPF do responsável"/>
-          </div>
+        <div class="form-group">
+          <label for="telefone">Telefone <span class="asterisk">*</span></label>
+          <input
+            type="tel"
+            id="telefone"
+            class="form-control"
+            v-model="form.contato"
+            required
+          />
+        </div>
 
-          <div class="form-group">
-            <label for="telefone">Telefone <span class="asterisk">*</span></label>
-            <input type="tel" v-model="form.telefone" id="telefone" placeholder="Digite o telefone" required />
-          </div>
+        <div class="form-group">
+          <label>Selecione o sexo do paciente</label>
+          <div>
+            <input
+              type="radio"
+              id="masculino"
+              v-model="form.sexo"
+              value="Masculino"
+            />
+            <label for="masculino">Masculino</label>
 
-           <div class="form-group">
-            <label>Selecione o sexo do paciente</label>
-            <div class="gender-options">
-              <div class="gender-option">
-                <label for="masculino">Masculino</label>
-                <input type="radio" v-model="form.sexo" id="masculino" value="Masculino" />
-              </div>
-              <div class="gender-option">
-                <label for="feminino">Feminino</label>
-                <input type="radio" v-model="form.sexo" id="feminino" value="Feminino" />
-              </div>
-            </div>
+            <input
+              type="radio"
+              id="feminino"
+              v-model="form.sexo"
+              value="Feminino"
+            />
+            <label for="feminino">Feminino</label>
           </div>
+        </div>
 
         <div class="button-register">
-            <button type="submit">Cadastrar</button>
+          <button type="submit">Salvar</button>
         </div>
       </form>
     </div>
@@ -70,7 +97,8 @@
 </template>
 
 <script>
-import SideBar from '../../components/SideBarProntuario.vue';
+import SideBar from "../../components/SideBarProntuario.vue";
+import { putEditar, getPaciente } from "../../services/api"; // Função de edição e busca do paciente
 
 export default {
   components: {
@@ -79,54 +107,33 @@ export default {
   data() {
     return {
       form: {
-        nomeCompleto: '',
-        dataNascimento: '',
-        cpf: '',
-        cpfResponsavel: '',
-        telefone: '',
-        sexo: '',
+        nome: "",
+        dataNascimento: "",
+        cpf: "",
+        cpfResponsavel: "",
+        contato: "",
+        sexo: "",
       },
-      fichaCounter: 1, // Adicionando contador de fichas
     };
   },
+  async created() {
+    const pacienteId = this.$route.params.id; // Pegando o ID da URL
+    try {
+      const paciente = await getPaciente(pacienteId); // Busca o paciente pelo ID
+      this.form = paciente; // Preenche o formulário com os dados do paciente
+    } catch (error) {
+      console.error("Erro ao buscar paciente:", error);
+    }
+  },
   methods: {
-    cadastrarPaciente() {
-      // Verificação básica
-      if (this.form.nomeCompleto && this.form.dataNascimento && this.form.telefone && this.form.sexo) {
-        // Lógica para cadastrar o paciente
-        console.log('Paciente cadastrado:', this.form);
-
-        // Redireciona após o cadastro
-        this.$router.push({
-          name: 'HomeProntuarios', // Nome da rota que você definiu
-          params: {
-            ficha: this.fichaCounter, // Passando o número da ficha sequencial
-            nomeCompleto: this.form.nomeCompleto, // Passando o nome completo
-            telefone: this.form.telefone, // Passando o telefone
-          },
-        });
-
-        // Incrementa o contador de ficha
-        this.incrementFichaCounter();
-
-        // Limpar o formulário após o cadastro
-        this.resetForm();
-      } else {
-        alert('Preencha todos os campos obrigatórios.');
+    async editarPaciente() {
+      const pacienteId = this.$route.params.id;
+      try {
+        await putEditar(pacienteId, this.form); // Envia a edição
+        this.$router.push("/HomeProntuarios"); // Redireciona para a lista de prontuários
+      } catch (error) {
+        console.error("Erro ao editar paciente:", error);
       }
-    },
-    incrementFichaCounter() {
-      this.fichaCounter += 1; // Incrementa o número da ficha
-    },
-    resetForm() {
-      this.form = {
-        nomeCompleto: '',
-        dataNascimento: '',
-        cpf: '',
-        cpfResponsavel: '',
-        telefone: '',
-        sexo: '',
-      };
     },
   },
 };

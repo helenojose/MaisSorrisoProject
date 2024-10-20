@@ -24,7 +24,7 @@
        
           <div class="form-group">
             <label for="nomeCompleto">Nome Completo <span class="asterisk">*</span></label>
-            <input type="text" v-model="form.nomeCompleto" id="nomeCompleto" placeholder="Digite o nome completo" required />
+            <input type="text" v-model="form.nome" id="nomeCompleto" placeholder="Digite o nome completo" required />
           </div>
 
           <div class="form-group">
@@ -44,7 +44,7 @@
 
           <div class="form-group">
             <label for="telefone">Telefone <span class="asterisk">*</span></label>
-            <input type="tel" v-model="form.telefone" id="telefone" placeholder="Digite o telefone" required />
+            <input type="tel" v-model="form.contato" id="telefone" placeholder="Digite o telefone" required />
           </div>
 
            <div class="form-group">
@@ -81,28 +81,28 @@ export default {
   data() {
     return {
       form: {
-        nomeCompleto: "",
+        nome: "",
         dataNascimento: "",
         cpf: "",
         cpfResponsavel: "",
-        telefone: "",
+        contato: "",
         sexo: "",
       },
-      fichaCounter: 1, // Contador de fichas
+      codPaciente: 1, // Contador de fichas
     };
   },
   methods: {
     async cadastrarPaciente() {
-      if (this.form.nomeCompleto && this.form.dataNascimento && this.form.telefone && this.form.sexo) {
+      if (this.form.nome && this.form.dataNascimento && this.form.contato && this.form.sexo) {
         try {
           const paciente = {
-            nomeCompleto: this.form.nomeCompleto,
+            nome: this.form.nome,
             dataNascimento: this.form.dataNascimento,
             cpf: this.form.cpf,
             cpfResponsavel: this.form.cpfResponsavel,
-            telefone: this.form.telefone,
+            contato: this.form.contato,
             sexo: this.form.sexo,
-            ficha: this.fichaCounter, // Número da ficha
+            codPaciente: this.codPaciente, // Número da ficha
           };
 
           // Enviando os dados do paciente para a API
@@ -111,7 +111,7 @@ export default {
           // Redireciona para HomeProntuarios após o cadastro
           this.$router.push({ name: "HomeProntuarios" });
 
-          this.fichaCounter += 1; // Incrementa o contador de ficha
+          //this.fichaCounter += 1; // Incrementa o contador de ficha
 
           this.resetForm(); // Limpa o formulário
         } catch (error) {
@@ -123,11 +123,11 @@ export default {
     },
     resetForm() {
       this.form = {
-        nomeCompleto: "",
+        nome: "",
         dataNascimento: "",
         cpf: "",
         cpfResponsavel: "",
-        telefone: "",
+        contato: "",
         sexo: "",
       };
     },

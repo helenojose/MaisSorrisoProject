@@ -15,7 +15,7 @@
             id="user" 
             type="text" 
             placeholder="USUÁRIO" 
-            v-model="username"
+            v-model="login"
           />
         </div>
 
@@ -24,7 +24,7 @@
             id="password" 
             type="password" 
             placeholder="SENHA" 
-            v-model="password"
+            v-model="senha"
           />
         </div>
 
@@ -45,21 +45,21 @@
 </template>
 
 <script>
-import { loginRecepcionista } from '@/services/api';
+import { loginRecepcionista } from '../../services/api';
 
 export default {
   data() {
     return {
-      username: '',
-      password: ''
+      login: '',
+      senha: ''
     };
   },
   methods: {
     async verificar() {
       try {
         const credenciais = {
-          username: this.username,
-          password: this.password
+          login: this.login,
+          senha: this.senha
         };
 
         // Faz a requisição de login para a API
@@ -67,7 +67,7 @@ export default {
 
         // Armazena a sessão e redireciona para a home do recepcionista
         sessionStorage.setItem('isLoggedIn', 'true');
-        this.$router.push('/home/recepcionista');
+        this.$router.push('/cadastro/pacientes');
       } catch (error) {
         alert('Usuário ou senha incorretos!');
         console.error('Erro ao fazer login:', error);
@@ -77,7 +77,7 @@ export default {
   created() {
     const isLoggedIn = sessionStorage.getItem('isLoggedIn');
     if (isLoggedIn) {
-      this.$router.push('/home/recepcionista');
+      this.$router.push('/cadastro/pacientes');
     }
   }
 };
