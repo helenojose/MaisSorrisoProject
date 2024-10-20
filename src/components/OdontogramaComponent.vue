@@ -1,5 +1,5 @@
 <template>
-    <div class="infosContainer">
+    <div @click.stop="hidePopUp" class="infosContainer">
         <div class="header">
             <div class="infos">
                 <div class="leftInfos">
@@ -29,31 +29,18 @@
         <div class="infosBody">
             <div class="dentesContainer">
                 <div  class="upLineDentes">
-                    <div v-for="dente in lineUpDentes" :key="dente.numDente" style="display: flex;">
-                        <img class="dente" src="dente.caminhoImg" alt="">
-                        <PopUpDente x="250"/>
+                    <div v-for="dente in lineUpDentes" :key="dente.numDente" style="display: flex; position: relative;">
+                        <img class="dente" :src="require(`../../public/dentes/${dente.caminhoImg}`)" alt="">
+                        <div @click="setPopUp($event.target)" :class="`UPquadradinhos ${dente.numDente}`"></div>
                     </div>
                 </div>
-                <div style="color: rgb(189, 189, 189);" class="tracejado">-----------------------------------------------------------------------------------------------------------</div>
                 <div class="downLineDentes">
-                    <img class="dente" src="../img/dentes/48.png" alt="">
-                    <img class="dente" src="../img/dentes/47.png" alt="">
-                    <img class="dente" src="../img/dentes/46.png" alt="">
-                    <img class="dente" src="../img/dentes/45.png" alt="">
-                    <img class="dente" src="../img/dentes/44.png" alt="">
-                    <img class="dente" src="../img/dentes/43.png" alt="">
-                    <img class="dente" src="../img/dentes/42.png" alt="">
-                    <img class="dente" src="../img/dentes/41.png" alt="">
-                    <img class="dente" src="../img/dentes/31.png" alt="">
-                    <img class="dente" src="../img/dentes/32.png" alt="">
-                    <img class="dente" src="../img/dentes/33.png" alt="">
-                    <img class="dente" src="../img/dentes/34.png" alt="">
-                    <img class="dente" src="../img/dentes/35.png" alt="">
-                    <img class="dente" src="../img/dentes/36.png" alt="">
-                    <img class="dente" src="../img/dentes/37.png" alt="">
-                    <img class="dente" src="../img/dentes/38.png" alt="">
+                    <div v-for="dente in lineDownDentes" :key="dente.numDente" style="display: flex; position: relative;">
+                        <img class="dente" :src="require(`../../public/dentes/${dente.caminhoImg}`)" alt="">
+                        <div @click="setPopUp($event.target)" :class="`quadradinhos ${dente.numDente}`"></div>
+                    </div>
                 </div>
-
+                <PopUpDente :id-dente="`${idDente}`" :x="`${denteXPosition}`" :y="`${denteYPosition}`" :display-style="`${popUpDisplay}`"/>
             </div>
             <div class="radiografia">
                 <span style="color:rgb(189, 189, 189) ; font-size: 24px;">RADIOGRAFIAS</span>
@@ -77,14 +64,16 @@
 
 <script>
     import PopUpDente from '../components/PopUpDente.vue'
-    import dentes1 from '../utils/dentes1.json'
-    import dentes2 from '../utils/dentes2.json'
+    import dentes1 from '../utils/dentes1.js'
+    import dentes2 from '../utils/dentes2.js'
 
     export default {
         data(){
             return{
                 denteXPosition: String,
                 denteYPosition: String,
+                popUpDisplay: "none",
+                idDente: String,
                 lineUpDentes: [],
                 lineDownDentes: []
             }
@@ -102,7 +91,17 @@
             idade: String
         },
         methods: {
+            setPopUp(quadradinho){
 
+                let coordenadas = quadradinho.getBoundingClientRect();
+                this.popUpDisplay = "grid";
+                this.denteXPosition = `${Math.ceil(coordenadas.x)}`;
+                this.denteYPosition = `${Math.ceil(coordenadas.y - 95)}`;
+                this.idDente = quadradinho.className.split(' ')[1];
+            },
+            hidePopUp(){
+                this.popUpDisplay = "none";
+            }
         },
         async mounted(){
             this.lineUpDentes = await dentes1
@@ -115,6 +114,28 @@
 </script>
 
 <style scoped>
+
+    .UPquadradinhos{
+        cursor: pointer;
+        height: 10px;
+        width: 10px;
+        background-color: rgb(167, 167, 167);
+        position: absolute;
+        top: -20px;
+        left: 8px;
+        border-radius: 5px;
+    }
+
+    .quadradinhos{
+        cursor: pointer;
+        top: 80px;
+        left: 8px;
+        border-radius: 5px;
+        height: 10px;
+        width: 10px;
+        background-color: rgb(167, 167, 167);  
+        position: absolute;
+    }
 
     .bi-arrow-right-square-fill{
         color: #752025;
@@ -138,6 +159,7 @@
         justify-content: center;
         align-items: center;
         gap: 8px;
+        position: relative;
     }
     .upLineDentes{
         height: 100px;

@@ -38,6 +38,10 @@
             let selectedPopUp = document.querySelector('.popUpContainer');
 
             selectedPopUp.style.left = `${this.x}px`;
+            selectedPopUp.style.top = `${this.y}px`;
+            selectedPopUp.style.display= this.displayStyle;
+            console.log(this.displayStyle)
+            console.log(this.idDente)
            },
            toggleActive(element){
             if(element.classList.contains("active")){
@@ -50,17 +54,30 @@
         
         props: {
             x: String,
-            y: String
+            y: String,
+            displayStyle: String,
+            idDente: String
+        },
+        watch:{
+            x(){
+                this.setPosition();
+            },
+            y(){
+                this.setPosition();
+            },
+            displayStyle(){
+                this.setPosition();
+            }
         },
         mounted(){
-            this.setPosition();
+            let selectedPopUp = document.querySelector('.popUpContainer');
+            selectedPopUp.style.display = 'none'
         }
     }
 </script>
 
 <style scoped>
     .popUpContainer{
-        display: none;
         flex-direction: column;
         height: 100px;
         width: 200px;
