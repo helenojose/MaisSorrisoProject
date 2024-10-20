@@ -66,7 +66,7 @@ export default {
 
         // Armazena a sessão e redireciona para a home do dentista
         sessionStorage.setItem('isLoggedIn', 'true');
-        this.$router.push('/home/dentista');
+        this.$router.push('/home/prontuarios');
       } catch (error) {
         alert('Usuário ou senha incorretos!');
         console.error('Erro ao fazer login:', error);
@@ -76,7 +76,7 @@ export default {
   created() {
     const isLoggedIn = sessionStorage.getItem('isLoggedIn');
     if (isLoggedIn) {
-      this.$router.push('/home/dentista');
+      this.$router.push('/home/prontuarios');
     }
   }
 };

@@ -2,7 +2,7 @@
     <div class="container">
       <SideBarProntuario />
       <div class="area">
-        <div class="tabela-container"> <!-- Adicionamos um contêiner para a tabela -->
+        <div class="tabela-container"> 
           <table id="tabela">
             <thead>
               <tr>
@@ -11,7 +11,7 @@
                 <th>Tratamentos Realizados</th>
                 <th>Dentista</th>
                 <th>Valor</th>
-                <th>Ações</th>
+                
               </tr>
             </thead>
             <tbody>
@@ -21,19 +21,19 @@
                 <td><input type="text" v-model="linha.tratamento" /></td>
                 <td><input type="text" v-model="linha.dentista" /></td>
                 <td><input type="text" v-model="linha.valor" /></td>
-                <td><button @click="removerLinha(index)">EXCLUIR</button></td>
+                <button @click="removerLinha(index)"><img src="/src/img/lixeiraicon.png" alt=""></button>
               </tr>
             </tbody>
           </table>
         </div>
         <div>
-          <button @click="adicionarLinha">ADICIONAR</button>
+          <button @click="adicionarLinha"><img src="/src/img/addicon.png" alt=""></button>
         </div>
         <div class="observacoes">
           <label for="observacoes">Observações do Paciente:</label>
           <textarea id="observacoes" rows="4"></textarea>
         </div>
-        <button>SALVAR</button>
+        <button><img src="/src/img/" alt="salvaricon"></button>
       </div>
     </div>
   </template>
@@ -56,7 +56,7 @@
         this.linhas.push({ data: '', dente: '', tratamento: '', dentista: '', valor: '' });
       },
       removerLinha(index) {
-        this.linhas.splice(index, 1); // Remove a linha no índice especificado
+        this.linhas.splice(index, 1); 
       },
     },
   };
@@ -70,17 +70,17 @@
   }
   
   .area {
+    margin-top: 50px;
     background-color: #ccc;
     border-radius: 20px;
     padding: 20px;
     width: 85%;
-    margin-left: 100px;
+    margin-left: 110px;
   }
   
-  /* Adicionando um contêiner para a tabela com limite de altura */
   .tabela-container {
-    max-height: 300px; /* Defina a altura máxima da tabela */
-    overflow-y: auto;  /* Adiciona barra de rolagem vertical */
+    max-height: 300px; 
+    overflow-y: auto; 
   }
   
   #tabela {
@@ -124,12 +124,8 @@
     text-align: center;
   }
   
-  button {
-    border-radius: 20px;
-  }
-  
   button:hover {
-    background-color: #a90000;
+    
     transform: scale(1.08);
   }
   </style>
