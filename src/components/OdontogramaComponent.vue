@@ -54,7 +54,7 @@
                 </span>
                 <button class="salvarTudoBtn">SALVAR TUDO</button>
             </div>
-            <div style="margin-left: auto; display: flex; align-items: center; gap: 20px; cursor: pointer;">
+            <div @click="mostrarVerso" style="margin-left: auto; display: flex; align-items: center; gap: 20px; cursor: pointer;">
                 <span style="color: #752025; font-weight: bolder; font-size: 24px;">VERSO</span>
                 <i class="bi bi-arrow-right-square-fill"></i>
             </div>
@@ -93,6 +93,10 @@ import PopUpDente from '../components/PopUpDente.vue'
         },
         methods: {
 
+            mostrarVerso(){
+                this.$store.commit('showVerso');
+            },
+
             getDenteStore(id){
                 return this.dentesInfo.find(item => item.denteId == id);
             },
@@ -118,7 +122,7 @@ import PopUpDente from '../components/PopUpDente.vue'
                 }
             }
         },
-        computed: mapState(['dentesInfo']),
+        computed: mapState(['dentesInfo', 'versoActive']),
         async mounted(){
             this.lineUpDentes = await dentes1
             this.lineDownDentes = await dentes2

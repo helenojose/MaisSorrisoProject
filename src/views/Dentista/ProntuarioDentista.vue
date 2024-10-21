@@ -2,7 +2,13 @@
     <div class="container">
         <SideBar/> 
         <div class="screenContainer">
-            <Odontograma/>
+
+                <div v-if="frenteActive">
+                    <Odontograma/>
+                </div>
+                <div v-if="!frenteActive">
+                    <VersoDentista/>
+                </div>
 
         </div>
     </div>
@@ -11,6 +17,8 @@
 <script>
 import SideBar from '../../components/SideBarProntuario.vue';
 import Odontograma from '../../components/OdontogramaComponent.vue';
+import VersoDentista from '../../components/VersoDentista.vue';
+import { mapState } from 'vuex';
 
 
 export default {
@@ -18,8 +26,11 @@ export default {
     components: {
         SideBar,
         Odontograma,
-
+        VersoDentista
     },
+    computed: {
+        ...mapState(['frenteActive']),
+    }
 };
 </script>
 
