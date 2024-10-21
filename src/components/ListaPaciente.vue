@@ -1,18 +1,18 @@
- <template>
- <!-- Área de Conteúdo -->
- <div id="content-area">
-    <!-- Cabeçalho -->
-    <div id="header">
+<template>
+    <!-- Área de Conteúdo -->
+    <div id="content-area">
+      <!-- Cabeçalho -->
+      <div id="header">
         <h1>BEM-VINDO AO SISTEMA DE PRONTUÁRIOS!</h1>
-    </div>
-
-    <!-- Campo de Busca -->
-    <div id="search-container">
-        <input type="text" placeholder="Digite o nome do paciente...">
-    </div>
-
-    <!-- Tabela de Prontuários -->
-    <div id="table-container">
+      </div>
+  
+      <!-- Campo de Busca -->
+      <div id="search-container">
+        <input type="text" placeholder="Digite o nome do paciente..." v-model="search">
+      </div>
+  
+      <!-- Tabela de Prontuários -->
+      <div id="table-container">
         <table>
           <thead>
             <tr>
@@ -22,7 +22,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(paciente, index) in filteredPacientes" :key="index">
+            <tr
+              v-for="(paciente, index) in filteredPacientes"
+              :key="index"
+              @click="verProntuario(paciente.codPaciente)"
+            >
               <td>Nº {{ paciente.codPaciente }}</td>
               <td>{{ paciente.nome }}</td>
               <td>{{ paciente.contato }}</td>
@@ -31,7 +35,7 @@
         </table>
       </div>
     </div>
-</template>
+  </template>
 
 <style scoped >
 #search-container {
@@ -131,6 +135,29 @@ table tbody tr:hover {
 </style>
 
 <script>
-export default{
-    name:'ListaPaciente'
-}</script>
+export default {
+  name: "ListaPaciente",
+  data() {
+    return {
+      search: "",
+      pacientes: [
+        { codPaciente: 1, nome: "João Silva", contato: "123456789" },
+        { codPaciente: 2, nome: "Maria Oliveira", contato: "987654321" }
+      ]
+    };
+  },
+  computed: {
+    filteredPacientes() {
+      return this.pacientes.filter((paciente) =>
+        paciente.nome.toLowerCase().includes(this.search.toLowerCase())
+      );
+    }
+  },
+  methods: {
+    verProntuario(codPaciente) {
+      // Redireciona para a página de prontuário passando o ID do paciente
+      this.$router.push({ name: "ProntuarioDentista", params: { id: codPaciente } });
+    }
+  }
+};
+</script>

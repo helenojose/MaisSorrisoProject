@@ -21,19 +21,25 @@
                 <td><input type="text" v-model="linha.tratamento" /></td>
                 <td><input type="text" v-model="linha.dentista" /></td>
                 <td><input type="text" v-model="linha.valor" /></td>
-                <button @click="removerLinha(index)"><img src="/src/img/lixeiraicon.png" alt=""></button>
+                <button class="img-button" @click="removerLinha(index)">
+                  <img src="/src/img/lixeiraicon.png" alt="Excluir" class="icon">
+                </button>
               </tr>
             </tbody>
           </table>
         </div>
         <div>
-          <button @click="adicionarLinha"><img src="/src/img/addicon.png" alt=""></button>
+          <button class="img-button" @click="adicionarLinha">
+          <img src="/src/img/addicon.png" alt="Adicionar" class="icon">
+        </button>
         </div>
         <div class="observacoes">
           <label for="observacoes">Observações do Paciente:</label>
           <textarea id="observacoes" rows="4"></textarea>
         </div>
-        <button><img src="/src/img/" alt="salvaricon"></button>
+        <button class="img-button">
+        <img src="/src/img/salvaricon.png" alt="Salvar" class="icon">
+      </button>
       </div>
     </div>
   </template>

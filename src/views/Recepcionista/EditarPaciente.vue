@@ -117,9 +117,9 @@ export default {
     };
   },
   async created() {
-    const pacienteId = this.$route.params.id; // Pegando o ID da URL
+    const codPaciente = this.$route.params.id; // Pegando o ID da URL
     try {
-      const paciente = await getPaciente(pacienteId); // Busca o paciente pelo ID
+      const paciente = await getPaciente(codPaciente); // Busca o paciente pelo ID
       this.form = paciente; // Preenche o formulário com os dados do paciente
     } catch (error) {
       console.error("Erro ao buscar paciente:", error);
@@ -127,9 +127,31 @@ export default {
   },
   methods: {
     async editarPaciente() {
-      const pacienteId = this.$route.params.id;
+      const codPaciente = this.$route.params.id; // Pegando o ID da URL como codPaciente
+
+        // Validação simples dos campos obrigatórios
+      if (!this.form.nome || !this.form.dataNascimento || !this.form.contato) {
+        alert("Preencha todos os campos obrigatórios: Nome, Data de Nascimento e Telefone.");
+        return; 
+      }
+
+        try {
+        // Envia a edição usando codPaciente
+        await putEditar(codPaciente, this.form);
+        
+        // Feedback de sucesso ao usuário
+        alert("Paciente editado com sucesso!");
+        
+        // Redireciona para a lista de prontuários
+        this.$router.push("/HomeProntuarios");
+       } catch (error) {
+        // Feedback de erro ao usuário
+        alert("Erro ao editar paciente.");
+        console.error("Erro ao editar paciente:", error);
+      }
+
       try {
-        await putEditar(pacienteId, this.form); // Envia a edição
+        await putEditar(codPaciente, this.form); // Envia a edição usando codPaciente
         this.$router.push("/HomeProntuarios"); // Redireciona para a lista de prontuários
       } catch (error) {
         console.error("Erro ao editar paciente:", error);

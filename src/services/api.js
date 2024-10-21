@@ -52,14 +52,26 @@ export const getPacientes = async () => {
   }
 };
 
-  export const putEditar = async (codPaciente, paciente) => {
-    try {
-      const response = await api.put("/paciente/${id}", paciente);
-      return response.data;
-    } catch (error) {
-      console.error("Erro ao editar pacientes:", error);
-      throw error;
-    }
+
+// Método para buscar um paciente específico pelo ID
+export const getPaciente = async (codPaciente) => {
+  try {
+    const response = await api.get(`/paciente/${codPaciente}`); // Busca um paciente específico pelo ID
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao buscar paciente:", error);
+    throw error;
+  }
+};
+
+export const putEditar = async (codPaciente, paciente) => {
+  try {
+    const response = await api.put(`/paciente/${codPaciente}`, paciente); 
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao editar paciente:", error);
+    throw error;
+  }
 };
 
 export default api;

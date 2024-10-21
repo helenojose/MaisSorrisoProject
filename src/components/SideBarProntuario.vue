@@ -3,7 +3,7 @@
         <div class="UpSideItems">
             <img src="../img/Sidebar/LogoSorriso.png" alt="">
             <div class="sideButton">
-                <i class="bi bi-house"></i>
+                <i class="bi bi-house" ></i>
                 <span class="sideText">HOME</span>
             </div>
             <div class="sideButton">
