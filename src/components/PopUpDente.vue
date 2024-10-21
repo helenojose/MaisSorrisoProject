@@ -1,56 +1,77 @@
 <template>
     <div @click="setPosition" class="popUpContainer">
-        <div class="elementContainer">
-            <span>EXTRAÇÃO</span>
-            <div @click="toggleActive($event.target)" class="checkbox ext"></div>
+        <div class="elementContainer" v-for="(servico, index) in servicos" :key="index">
+            <span class="poptext">{{ servico.label }}</span>
+            <div @click="servico.active = !servico.active" :class="{ 'active': servico.active }" class="checkbox"></div>
         </div>
-        <div class="elementContainer">
-            <span>PINO</span>
-            <div @click="toggleActive($event.target)" class="checkbox pin"></div>
-        </div>
-        <div class="elementContainer">
-            <span>CANAL</span>
-            <div @click="toggleActive($event.target)" class="checkbox can"></div>
-        </div>
-        <div class="elementContainer">
-            <span>COROA</span>
-            <div @click="toggleActive($event.target)" class="checkbox cor"></div>
-        </div>
-        <div class="elementContainer">
-            <span>RESTAURAÇÃO</span>
-            <div @click="toggleActive($event.target)" class="checkbox res"></div>
-        </div>
-
-        <button style=" font-weight: bolder; background-color: rgb(117, 32, 37); border: none; position: relative; top: 50px; color: white; height: 30px;">SALVAR</button>
+        <button @click="salvarDadosDente" style=" font-weight: bolder; background-color: rgb(117, 32, 37); border: none; position: relative; top: 50px; color: white; height: 30px;">SALVAR</button>
     </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
     export default{
         name: "PopUp",
         data(){
             return{
-                
+                servicos: [
+                    { label: 'EXTRAÇÃO', value: 'extracao', active: false },
+                    { label: 'PINO', value: 'pino', active: false },
+                    { label: 'CANAL', value: 'canal', active: false },
+                    { label: 'COROA', value: 'coroa', active: false },
+                    { label: 'RESTAURAÇÃO', value: 'restauracao', active: false }
+                ]
             }
         },
         methods : {
+           loadServicosInStore(){
+               //busca na store o dente pelo idIndex carregado ao mudar o dente selecionado
+               let dente = this.dentesInfo.find(dente => dente.denteId == this.idDente);
+
+                if(dente){
+                    dente.servicos.forEach(servico => {
+                        let servicoIndex = this.servicos.findIndex(item => item.value == servico);
+                        //se no store existir um servico ele seta como ativo o servico, pois ja existe
+                        if(servicoIndex !== -1){
+                            this.servicos[servicoIndex].active = true;
+                        }
+                    })
+                }
+           },
+           resetServicos(){
+            this.servicos = [
+                    { label: 'EXTRAÇÃO', value: 'extracao', active: false },
+                    { label: 'PINO', value: 'pino', active: false },
+                    { label: 'CANAL', value: 'canal', active: false },
+                    { label: 'COROA', value: 'coroa', active: false },
+                    { label: 'RESTAURAÇÃO', value: 'restauracao', active: false }
+                ]
+           },
            setPosition(){
             let selectedPopUp = document.querySelector('.popUpContainer');
 
             selectedPopUp.style.left = `${this.x}px`;
             selectedPopUp.style.top = `${this.y}px`;
             selectedPopUp.style.display= this.displayStyle;
-            console.log(this.displayStyle)
-            console.log(this.idDente)
            },
-           toggleActive(element){
-            if(element.classList.contains("active")){
-                element.classList.remove("active");
+           salvarDadosDente(){
+            let servicosSelecionados = this.servicos.filter(servico => servico.active).map(servico => servico.value);
+            
+            let denteFoundIndex = this.dentesInfo.findIndex((item)=> item.denteId == this.idDente)
+            
+            if(this.dentesInfo[denteFoundIndex]){
+                this.dentesInfo[denteFoundIndex].servicos = servicosSelecionados;
             }else{
-                element.classList.add("active");
+                this.dentesInfo.push({
+                    denteId: this.idDente,
+                    servicos: servicosSelecionados
+                })
             }
+            console.log(this.dentesInfo);
            }
         },
+        computed: mapState(['dentesInfo']),
         
         props: {
             x: String,
@@ -61,6 +82,9 @@
         watch:{
             x(){
                 this.setPosition();
+
+                this.resetServicos();
+                this.loadServicosInStore();
             },
             y(){
                 this.setPosition();
@@ -72,6 +96,7 @@
         mounted(){
             let selectedPopUp = document.querySelector('.popUpContainer');
             selectedPopUp.style.display = 'none'
+            this.loadServicosInStore()
         }
     }
 </script>

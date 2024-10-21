@@ -1,5 +1,5 @@
 <template>
-    <div @click.stop="hidePopUp" class="infosContainer">
+    <div @click="hidePopUp($event.target)" class="infosContainer">
         <div class="header">
             <div class="infos">
                 <div class="leftInfos">
@@ -31,13 +31,13 @@
                 <div  class="upLineDentes">
                     <div v-for="dente in lineUpDentes" :key="dente.numDente" style="display: flex; position: relative;">
                         <img class="dente" :src="require(`../../public/dentes/${dente.caminhoImg}`)" alt="">
-                        <div @click="setPopUp($event.target)" :class="`UPquadradinhos ${dente.numDente}`"></div>
+                        <div @click="setPopUp($event.target)" :class="['UPquadradinhos' , dente.numDente, {'activePontinho' : (!!getDenteStore(dente.numDente) && getDenteStore(dente.numDente).servicos.length > 0 )}]"></div>
                     </div>
                 </div>
                 <div class="downLineDentes">
                     <div v-for="dente in lineDownDentes" :key="dente.numDente" style="display: flex; position: relative;">
                         <img class="dente" :src="require(`../../public/dentes/${dente.caminhoImg}`)" alt="">
-                        <div @click="setPopUp($event.target)" :class="`quadradinhos ${dente.numDente}`"></div>
+                        <div @click="setPopUp($event.target)" :class="['quadradinhos' , dente.numDente, {'activePontinho' : (!!getDenteStore(dente.numDente) && getDenteStore(dente.numDente).servicos.length > 0 )}]"></div>
                     </div>
                 </div>
                 <PopUpDente :id-dente="`${idDente}`" :x="`${denteXPosition}`" :y="`${denteYPosition}`" :display-style="`${popUpDisplay}`"/>
@@ -63,7 +63,8 @@
 </template>
 
 <script>
-    import PopUpDente from '../components/PopUpDente.vue'
+    import { mapState } from 'vuex';
+import PopUpDente from '../components/PopUpDente.vue'
     import dentes1 from '../utils/dentes1.js'
     import dentes2 from '../utils/dentes2.js'
 
@@ -91,6 +92,11 @@
             idade: String
         },
         methods: {
+
+            getDenteStore(id){
+                return this.dentesInfo.find(item => item.denteId == id);
+            },
+
             setPopUp(quadradinho){
 
                 let coordenadas = quadradinho.getBoundingClientRect();
@@ -99,21 +105,33 @@
                 this.denteYPosition = `${Math.ceil(coordenadas.y - 95)}`;
                 this.idDente = quadradinho.className.split(' ')[1];
             },
-            hidePopUp(){
-                this.popUpDisplay = "none";
+            hidePopUp(element){
+                if(element.classList.contains('UPquadradinhos')
+                 || element.classList.contains('quadradinhos')
+                 || element.classList.contains('checkbox')
+                 || element.classList.contains('popUpContainer')
+                 || element.classList.contains('elementContainer')
+                 || element.classList.contains('poptext')){
+                    return
+                }else{
+                    this.popUpDisplay = "none";
+                }
             }
         },
+        computed: mapState(['dentesInfo']),
         async mounted(){
             this.lineUpDentes = await dentes1
             this.lineDownDentes = await dentes2
-            console.log(dentes1)
-            console.log(dentes2)
         }
     }
 
 </script>
 
 <style scoped>
+
+    .activePontinho{
+        background-color: #752025 !important;
+    }
 
     .UPquadradinhos{
         cursor: pointer;
