@@ -57,6 +57,7 @@ export const getPacientes = async () => {
 export const getPaciente = async (codPaciente) => {
   try {
     const response = await api.get(`/paciente/${codPaciente}`); // Busca um paciente específico pelo ID
+    response.data.idade = new Date().getFullYear() - Number(response.data.dataNascimento.split('-')[0])
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar paciente:", error);

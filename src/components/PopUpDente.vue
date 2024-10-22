@@ -16,11 +16,11 @@ import { mapState } from 'vuex';
         data(){
             return{
                 servicos: [
-                    { label: 'EXTRAÇÃO', value: 'extracao', active: false },
-                    { label: 'PINO', value: 'pino', active: false },
-                    { label: 'CANAL', value: 'canal', active: false },
-                    { label: 'COROA', value: 'coroa', active: false },
-                    { label: 'RESTAURAÇÃO', value: 'restauracao', active: false }
+                    { label: 'EXTRAÇÃO', value: '1', active: false },
+                    { label: 'PINO', value: '4', active: false },
+                    { label: 'CANAL', value: '2', active: false },
+                    { label: 'COROA', value: '5', active: false },
+                    { label: 'RESTAURAÇÃO', value: '3', active: false }
                 ]
             }
         },
@@ -41,11 +41,11 @@ import { mapState } from 'vuex';
            },
            resetServicos(){
             this.servicos = [
-                    { label: 'EXTRAÇÃO', value: 'extracao', active: false },
-                    { label: 'PINO', value: 'pino', active: false },
-                    { label: 'CANAL', value: 'canal', active: false },
-                    { label: 'COROA', value: 'coroa', active: false },
-                    { label: 'RESTAURAÇÃO', value: 'restauracao', active: false }
+                    { label: 'EXTRAÇÃO', value: '1', active: false },
+                    { label: 'PINO', value: '4', active: false },
+                    { label: 'CANAL', value: '2', active: false },
+                    { label: 'COROA', value: '5', active: false },
+                    { label: 'RESTAURAÇÃO', value: '3', active: false }
                 ]
            },
            setPosition(){

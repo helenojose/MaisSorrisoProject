@@ -3,8 +3,8 @@
     <div style="display: flex; justify-content: center; align-items: center;" class="container">
       <SideBarProntuario />
 
-      <div v-if="!dentesInfo.length > 0">Selecione ou modifique a parte frontal do prontuário</div>
-      <div v-if="dentesInfo.length > 0"  class="area">
+      <div>Selecione ou modifique a parte frontal do prontuário</div>
+      <div class="area">
         <div class="tabela-container"> 
           <table id="tabela">
             <thead>
@@ -23,25 +23,25 @@
                 <td><span>{{ dente.denteId }} - {{tratarServicosRecebidos(dente.servicos)}}</span></td>
                 <td>
                   <select name="" id="tratamentos">
-                    <option value="LIMPEZA">LIMPEZA</option>
-                    <option value="CLAREAMENTO">CLAREAMENTO</option>
-                    <option value="APARELHOS ORTODONTICOS">APARELHOS ORTODONTICOS</option>
-                    <option value="TRATAMENTO DE GENGIVAS">TRATAMENTO DE GENGIVAS</option>
-                    <option value="FACETAS">FACETAS</option>
-                    <option value="MANUTENCAO">MANUTENCAO</option>
-                    <option value="FRENECTOMIA">FRENECTOMIA</option>
-                    <option value="REMOCAO DE LESAO PATOLOGICA">REMOCAO DE LESAO PATOLOGICA</option>
-                    <option value="CIRURGIA R R A">REGULARIZACAO DE REBORDO ALVEOLAR</option>
-                    <option value="PROTESE ADESIVA">PROTESE ADESIVA</option>
-                    <option value="AUMENTO COROA CLINICA">AUMENTO COROA CLINICA</option>
-                    <option value="GENGIVOPLASTIA">GENGIVOPLASTIA</option>
-                    <option value="PROVISORIO">PROVISORIO</option>
-                    <option value="PLACA BRUXISMO">PLACA BRUXISMO</option>
-                    <option value="CONTENCAO">CONTENCAO</option>
+                    <option value="6">LIMPEZA</option>
+                    <option value="7">CLAREAMENTO</option>
+                    <option value="8">APARELHOS ORTODONTICOS</option>
+                    <option value="9">TRATAMENTO DE GENGIVAS</option>
+                    <option value="10">FACETAS</option>
+                    <option value="11">MANUTENCAO</option>
+                    <option value="12">FRENECTOMIA</option>
+                    <option value="13">REMOCAO DE LESAO PATOLOGICA</option>
+                    <option value="14">REGULARIZACAO DE REBORDO ALVEOLAR</option>
+                    <option value="15">PROTESE ADESIVA</option>
+                    <option value="16">AUMENTO COROA CLINICA</option>
+                    <option value="17">GENGIVOPLASTIA</option>
+                    <option value="18">PROVISORIO</option>
+                    <option value="19">PLACA BRUXISMO</option>
+                    <option value="20">CONTENCAO</option>
                   </select>
                 </td>
-                <td>Receber da frente</td>
-                <td>test</td>
+                <td>{{getUser()}}</td>
+                <td>R$<input maxlength="5" type="number"></td>
               </tr>
             </tbody>
           </table>
@@ -60,6 +60,7 @@
   
   <script>
   import SideBarProntuario from '@/components/SideBarProntuario.vue';
+
 import { mapState } from 'vuex';
   
   export default {
@@ -73,12 +74,16 @@ import { mapState } from 'vuex';
       };
     },
     methods: {
-      // adicionarLinha() {
-      //   this.linhas.push({ data: '', dente: '', tratamento: '', dentista: '', valor: '' });
-      // },
-      // removerLinha(index) {
-      //   this.linhas.splice(index, 1); 
-      // },
+      getUser(){
+        return sessionStorage.getItem('user')
+      },
+
+      adicionarLinha() {
+        this.linhas.push({ data: '', dente: '', tratamento: '', dentista: '', valor: '' });
+      },
+      removerLinha(index) {
+        this.linhas.splice(index, 1); 
+      },
       esconderVerso(){
         this.$store.commit('hideVerso');
       },

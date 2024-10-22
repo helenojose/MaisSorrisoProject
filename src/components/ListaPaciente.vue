@@ -23,7 +23,7 @@
           </thead>
           <tbody>
             <tr
-              v-for="(paciente, index) in filteredPacientes"
+              v-for="(paciente, index) in pacientesDados"
               :key="index"
               @click="verProntuario(paciente.codPaciente)"
             >
@@ -155,6 +155,9 @@ export default {
       // Redireciona para a página de prontuário passando o ID do paciente
       this.$router.push({ name: "ProntuarioDentista", params: { id: codPaciente } });
     }
+  },
+  props: {
+    pacientesDados: Array
   }
 };
 </script>

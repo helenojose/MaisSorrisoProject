@@ -66,6 +66,7 @@ export default {
 
         // Armazena a sessão e redireciona para a home do dentista
         sessionStorage.setItem('isLoggedIn', 'true');
+        sessionStorage.setItem('user', this.login)
         this.$router.push('/home/prontuarios');
       } catch (error) {
         alert('Usuário ou senha incorretos!');
