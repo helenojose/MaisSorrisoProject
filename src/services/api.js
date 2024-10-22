@@ -75,4 +75,6 @@ export const putEditar = async (codPaciente, paciente) => {
   }
 };
 
+
+
 export default api;

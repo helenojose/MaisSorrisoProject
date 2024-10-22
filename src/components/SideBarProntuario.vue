@@ -2,16 +2,21 @@
     <div class="sideBarContainer">
         <div class="UpSideItems">
             <img src="../img/Sidebar/LogoSorriso.png" alt="">
-            <div class="sideButton">
-                <i class="bi bi-house" ></i>
-                <span class="sideText">HOME</span>
-            </div>
-            <div class="sideButton">
+            
+            <div @click="irHomeProntuario" class="sideButton">
                 <i class="bi bi-card-list"></i>
-                <span style="font-size: 12px" class="sideText">ATENDIMENTOS</span>
+                <span style="font-size: 12px" class="sideText">PRONTUARIOS</span>
+            </div>
+            <div @click="cadastrarPaciente" class="sideButton">
+                <i class="bi bi-person-circle"></i>
+                <span style="font-size: 11px" class="sideText">CADASTRAR PACIENTE</span>
+            </div>
+            <div @click="irAtendimentos" class="sideButton">
+                <i class="bi bi-archive-fill"></i>
+                <span style="font-size: 11px" class="sideText">ATENDIMENTOS</span>
             </div>
         </div>
-        <div class="LogOutButtonContainer">
+        <div @click="sair" class="LogOutButtonContainer">
             <i class="bi bi-box-arrow-left"></i>
             <span style="color: white;">Sair</span>
         </div>
@@ -19,8 +24,33 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
     name: 'SideBar',
+    computed: {
+        ...mapState(['userType']) // Supondo que você tenha userType no Vuex
+    },
+    methods: {
+        cadastrarPaciente(){
+            this.$router.push({ name: "CadastroPacientes" });
+        },
+        irHomeProntuario() {
+            this.$router.push({ name: "HomeProntuarios" });
+        },
+        irAtendimentos() {
+            this.$router.push({ name: "Atendimento" });
+        },
+        sair() {
+            // Verifica o tipo de usuário e redireciona para a tela de login correspondente
+            if (this.userType === 1) {
+                this.$router.push({ name: "LoginDentista" });
+            } else if (this.userType === 2) {
+                this.$router.push({ name: "LoginRecepcionista" });
+            }
+            // Aqui você pode adicionar a lógica para limpar o estado de autenticação, se necessário
+        }
+    }
 };
 </script>
 

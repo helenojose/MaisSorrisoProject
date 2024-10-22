@@ -88,7 +88,6 @@ export default {
             const atendimento = {
                 codPaciente: this.codPaciente,
                 // Adicione outros dados relevantes aqui se necessário
-                servicos: this.getServicosConcluidos()
             };
             
             // Dispara a ação do Vuex para adicionar o atendimento
@@ -99,31 +98,6 @@ export default {
 
             this.$router.push({ name: "Atendimento" })
         },
-
-
-        
-        getServicosConcluidos() {
-            // Aqui você deve retornar os serviços que foram adicionados ao dente
-            // Você pode adaptar isso conforme a estrutura de dados do seu dente
-            // Por exemplo:
-            let servicos = [];
-            this.lineUpDentes.forEach(dente => {
-                const denteInfo = this.getDenteStore(dente.numDente);
-                if (denteInfo && denteInfo.servicos.length > 0) {
-                    servicos.push(...denteInfo.servicos);
-                }
-            });
-            this.lineDownDentes.forEach(dente => {
-                const denteInfo = this.getDenteStore(dente.numDente);
-                if (denteInfo && denteInfo.servicos.length > 0) {
-                    servicos.push(...denteInfo.servicos);
-                }
-            });
-            return servicos;
-        },
-
-
-
         uploadFile() {
             document.getElementById('file').click();
         },
@@ -164,21 +138,15 @@ export default {
         this.lineDownDentes = await dentes2;
 
         this.codPaciente = this.$route.params.id;
-        this.pacienteDados = [{
-        nome: "Lukas Rodrigues",
-        cpf: "99999999900",
-        cpfResponsavel:'',
-        dataNascimento:'2005/10/10',
-        contato:"2874821578",
-        sexo:"Masculino",
-        codPaciente:"2"
-      }][0]
+        let allPacientes = this.$store.getters.allPacientes
+        this.pacienteDados = allPacientes.find(paciente => paciente.codPaciente == this.codPaciente)
         //this.pacienteDados = await getPaciente(this.codPaciente);
 
         console.log(this.pacienteDados);
     },
 };
 </script>
+
 <style scoped>
 
     .activePontinho{

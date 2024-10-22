@@ -37,15 +37,7 @@ export default {
       // this.pacientes = response;
       // console.log(this.pacientes)
 
-      this.pacientes = [{
-        nome: "Lukas Rodrigues",
-        cpf: "99999999900",
-        cpfResponsavel:'',
-        dataNascimento:'2005/10/10',
-        contato:"2874821578",
-        sexo:"Masculino",
-        codPaciente:"2"
-      }]
+      this.pacientes = this.$store.getters.allPacientes
     } catch (error) {
       console.error("Erro ao carregar pacientes:", error);
     }
@@ -73,6 +65,7 @@ export default {
   }
 };
 </script>
+
 
 
 

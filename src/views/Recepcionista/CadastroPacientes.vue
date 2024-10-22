@@ -34,17 +34,17 @@
 
           <div class="form-group">
             <label for="cpf">CPF</label>
-            <input type="text" v-model="form.cpf" id="cpf" placeholder="Digite o CPF" />
+            <input type="text" v-model="form.cpf" id="cpf" placeholder="Digite o CPF" @blur="formatarCpf"/>
           </div>
 
           <div class="form-group">
             <label for="cpfResponsavel">CPF do Responsável</label>
-            <input type="text" v-model="form.cpfResponsavel" id="cpfResponsavel" placeholder="Digite o CPF do responsável"/>
+            <input type="text" v-model="form.cpfResponsavel" id="cpfResponsavel" placeholder="Digite o CPF do responsável" @blur="formatarCpf" />
           </div>
 
           <div class="form-group">
             <label for="telefone">Telefone <span class="asterisk">*</span></label>
-            <input type="tel" v-model="form.contato" id="telefone" placeholder="Digite o telefone" required />
+            <input type="tel" v-model="form.contato" id="telefone" placeholder="Digite o telefone" @blur="formatarTelefone" required />
           </div>
 
            <div class="form-group">
@@ -72,7 +72,7 @@
 
 <script>
 import SideBar from "../../components/SideBarProntuario.vue";
-import { cadastrarPaciente } from "../../services/api";
+//import { cadastrarPaciente } from "../../services/api";
 
 export default {
   components: {
@@ -88,11 +88,12 @@ export default {
         contato: "",
         sexo: "",
       },
-      codPaciente: 1, // Contador de fichas
+      codPaciente: 0, // Contador de fichas
     };
   },
   methods: {
     async cadastrarPaciente() {
+      this.codPaciente ++
       if (this.form.nome && this.form.dataNascimento && this.form.contato && this.form.sexo) {
         try {
           const paciente = {
@@ -106,10 +107,12 @@ export default {
           };
 
           // Enviando os dados do paciente para a API
-          await cadastrarPaciente(paciente);
+          //await cadastrarPaciente(paciente);
+          this.$store.dispatch('addPaciente', paciente)
+          console.log(this.$store.getters.allPacientes)
 
           // Redireciona para HomeProntuarios após o cadastro
-          this.$router.push({ name: "HomeProntuarios" });
+          //this.$router.push({ name: "HomeProntuarios" });
 
           //this.fichaCounter += 1; // Incrementa o contador de ficha
 
@@ -121,6 +124,23 @@ export default {
         alert("Preencha todos os campos obrigatórios.");
       }
     },
+
+      formatarCpf() {
+      this.form.cpf = this.form.cpf
+        .replace(/\D/g, "") // Remove tudo que não é dígito
+        .replace(/(\d{3})(\d)/, "$1.$2") // Adiciona ponto
+        .replace(/(\d{3})(\d)/, "$1.$2") // Adiciona ponto
+        .replace(/(\d{3})(\d{1,2})$/, "$1-$2") // Adiciona hífen
+        .replace(/(\d{14})\d+$/, "$1"); // Limita a 14 dígitos
+    },
+    formatarTelefone() {
+      this.form.contato = this.form.contato
+        .replace(/\D/g, "") // Remove tudo que não é dígito
+        .replace(/(\d{2})(\d)/, "($1) $2") // Adiciona parênteses
+        .replace(/(\d{5})(\d)/, "$1-$2") // Adiciona hífen
+        .replace(/(\d{15})\d+$/, "$1"); // Limita a 15 dígitos
+    },
+
     resetForm() {
       this.form = {
         nome: "",

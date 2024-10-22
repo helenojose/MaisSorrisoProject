@@ -1,17 +1,17 @@
 <template>
   <div>
-      <SideBarProntuario/>
+      <SideBarProntuario />
       <p id="header">PROCEDIMENTO CONCLUÍDO ({{ atendimentosConcluidos.length }})</p>
-      <div class="bloco concluido" v-for="atendimento in atendimentosConcluidos" :key="atendimento.numero">
+      <div class="bloco concluido" v-for="atendimento in atendimentosConcluidos" :key="atendimento.codPaciente">
           <div class="bloco-menor">
               <p class="numero">Nº {{ atendimento.codPaciente }}</p>
               <button @click="concluirAtendimento(atendimento)" class="atendimento-concluido">ATENDIMENTO CONCLUÍDO</button>
               <button @click="verFicha(atendimento.codPaciente)" class="visualizar">VISUALIZAR FICHA</button>
           </div>
       </div>
-      
-      <p id="header" style="margin-top: 40px;">HISTÓRICO DE ATENDIMENTOS ({{ atendimentosConcluidos.length }})</p>
-      <div class="bloco concluido" v-for="atendimento in atendimentosConcluidos" :key="atendimento.codPaciente">
+
+      <p id="header">HISTÓRICO DE ATENDIMENTO ({{ historicoAtendimentos.length }})</p>
+      <div class="bloco historico" v-for="atendimento in historicoAtendimentos" :key="atendimento.codPaciente">
           <div class="bloco-menor">
               <p class="numero">Nº {{ atendimento.codPaciente }}</p>
               <button @click="verFicha(atendimento.codPaciente)" class="visualizar">VISUALIZAR FICHA</button>
@@ -30,18 +30,18 @@ export default {
       SideBarProntuario
   },
   computed: {
-      ...mapState(['atendimentosConcluidos','atendimentosEmAndamento']),
+      ...mapState(['atendimentosConcluidos', 'historicoAtendimentos']),
   },
   methods: {
-    verFicha(codPaciente){
-        this.$router.push({ name: "FichaPaciente", params: { id: codPaciente } });
-    },
-     concluirAtendimento(atendimento) {
-      // Dispara uma ação do Vuex para mover o atendimento
-      this.$store.dispatch('moverParaHistorico', atendimento);
-    }
+      verFicha(idFicha) {
+          this.$router.push({ name: "ProntuarioDentista", params: { id: idFicha } });
+      },
+      concluirAtendimento(atendimento) {
+          this.$store.dispatch('moveAtendimentoHistorico', atendimento); // Move para o histórico
+          alert('Atendimento movido para o histórico!'); // Feedback para o usuário
+      }
   }
-}
+};
 </script>
 
 <style scoped>
