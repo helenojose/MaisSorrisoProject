@@ -6,8 +6,7 @@ export default createStore({
     state: {
         dentesInfo: [],
         frenteActive: true,
-        atendimentosConcluidos: [],
-        pacienteAtual: null, // Novo estado para armazenar o paciente atual
+        atendimentosConcluidos: []
     },
 
     mutations: {

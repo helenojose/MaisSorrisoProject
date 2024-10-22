@@ -1,5 +1,6 @@
 <template>
   <div>
+<<<<<<< HEAD
     <SideBarProntuario/>
     <p id="header">PROCEDIMENTO CONCLUÍDO ({{ atendimentosConcluidos.length }})</p>
     <div class="bloco concluido" v-for="atendimento in atendimentosConcluidos" :key="atendimento.codPaciente">
@@ -11,6 +12,17 @@
         </div>
     </div>
 
+=======
+      <SideBarProntuario/>
+      <p id="header">PROCEDIMENTO CONCLUÍDO ({{ atendimentosConcluidos.length }})</p>
+      <div class="bloco concluido" v-for="atendimento in atendimentosConcluidos" :key="atendimento.numero">
+          <div class="bloco-menor">
+              <p class="numero">Nº {{ atendimento.codPaciente }}</p>
+              <button class="atendimento-concluido">ATENDIMENTO CONCLUÍDO</button>
+              <button @click="verFicha" class="visualizar">VISUALIZAR FICHA</button>
+          </div>
+      </div>
+>>>>>>> 8f913cd15cf6942a97ea3ac7ec603fcf122374cb
       
       <p id="header">HISTÓRICO DE ATENDIMENTO (1)</p>
       <div class="bloco historico">
@@ -34,6 +46,11 @@ export default {
   computed: {
       ...mapState(['atendimentosConcluidos']),
   },
+  methods: {
+    verFicha(){
+        this.$router.push({ name: "ProntuarioDentista", params: { id: this.atendimentosConcluidos[0].codPaciente } })
+    }
+  }
 };
 </script>
 

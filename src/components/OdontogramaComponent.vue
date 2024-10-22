@@ -62,6 +62,7 @@
 </template>
 
 <script>
+<<<<<<< HEAD
     import { mapState } from 'vuex';
 import PopUpDente from '../components/PopUpDente.vue'
     import dentes1 from '../utils/dentes1.js'
@@ -76,6 +77,74 @@ import PopUpDente from '../components/PopUpDente.vue'
                 idDente: String,
                 lineUpDentes: [],
                 lineDownDentes: []
+=======
+import { mapState } from 'vuex';
+import PopUpDente from '../components/PopUpDente.vue';
+import dentes1 from '../utils/dentes1.js';
+import dentes2 from '../utils/dentes2.js';
+//import { getPaciente } from '@/services/api';
+
+export default {
+    data() {
+        return {
+            denteXPosition: String,
+            denteYPosition: String,
+            popUpDisplay: "none",
+            idDente: String,
+            lineUpDentes: [],
+            lineDownDentes: [],
+            codPaciente: String,
+            pacienteDados: Object
+        };
+    },
+    components: {
+        PopUpDente
+    },
+    methods: {
+        async salvarTudo() {
+            const atendimento = {
+                codPaciente: this.codPaciente,
+                // Adicione outros dados relevantes aqui se necessário
+            };
+            
+            // Dispara a ação do Vuex para adicionar o atendimento
+            this.$store.dispatch('adicionarAtendimento', atendimento);
+            
+            // Feedback visual ao usuário
+            alert("Atendimento salvo com sucesso!");
+
+            this.$router.push({ name: "Atendimento" })
+        },
+        uploadFile() {
+            document.getElementById('file').click();
+        },
+        irHomeProntuario() {
+            this.$router.push({ name: "HomeProntuarios" });
+        },
+        mostrarVerso() {
+            this.$store.commit('showVerso');
+        },
+        getDenteStore(id) {
+            return this.dentesInfo.find(item => item.denteId == id);
+        },
+        setPopUp(quadradinho) {
+            let coordenadas = quadradinho.getBoundingClientRect();
+            this.popUpDisplay = "grid";
+            this.denteXPosition = `${Math.ceil(coordenadas.x)}`;
+            this.denteYPosition = `${Math.ceil(coordenadas.y - 95)}`;
+            this.idDente = quadradinho.className.split(' ')[1];
+        },
+        hidePopUp(element) {
+            if (element.classList.contains('UPquadradinhos') ||
+                element.classList.contains('quadradinhos') ||
+                element.classList.contains('checkbox') ||
+                element.classList.contains('popUpContainer') ||
+                element.classList.contains('elementContainer') ||
+                element.classList.contains('poptext')) {
+                return;
+            } else {
+                this.popUpDisplay = "none";
+>>>>>>> 8f913cd15cf6942a97ea3ac7ec603fcf122374cb
             }
         },
         components: {
@@ -140,6 +209,24 @@ import PopUpDente from '../components/PopUpDente.vue'
         }
     }
 
+<<<<<<< HEAD
+=======
+        this.codPaciente = this.$route.params.id;
+        this.pacienteDados = [{
+        nome: "Lukas Rodrigues",
+        cpf: "99999999900",
+        cpfResponsavel:'',
+        dataNascimento:'2005/10/10',
+        contato:"2874821578",
+        sexo:"Masculino",
+        codPaciente:"2"
+      }][0]
+        //this.pacienteDados = await getPaciente(this.codPaciente);
+
+        console.log(this.pacienteDados);
+    },
+};
+>>>>>>> 8f913cd15cf6942a97ea3ac7ec603fcf122374cb
 </script>
 
 <style scoped>
