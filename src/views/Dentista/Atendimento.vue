@@ -1,34 +1,20 @@
 <template>
   <div>
-<<<<<<< HEAD
-    <SideBarProntuario/>
-    <p id="header">PROCEDIMENTO CONCLUÍDO ({{ atendimentosConcluidos.length }})</p>
-    <div class="bloco concluido" v-for="atendimento in atendimentosConcluidos" :key="atendimento.codPaciente">
-        <div class="bloco-menor">
-            <p class="numero">Nº {{ atendimento.codPaciente }}</p>
-            <p class="nome">Nome: {{ atendimento.nome }}</p>
-            <button class="atendimento-concluido">ATENDIMENTO CONCLUÍDO</button>
-            <button class="visualizar">VISUALIZAR FICHA</button>
-        </div>
-    </div>
-
-=======
       <SideBarProntuario/>
       <p id="header">PROCEDIMENTO CONCLUÍDO ({{ atendimentosConcluidos.length }})</p>
       <div class="bloco concluido" v-for="atendimento in atendimentosConcluidos" :key="atendimento.numero">
           <div class="bloco-menor">
               <p class="numero">Nº {{ atendimento.codPaciente }}</p>
-              <button class="atendimento-concluido">ATENDIMENTO CONCLUÍDO</button>
-              <button @click="verFicha" class="visualizar">VISUALIZAR FICHA</button>
+              <button @click="concluirAtendimento(atendimento)" class="atendimento-concluido">ATENDIMENTO CONCLUÍDO</button>
+              <button @click="verFicha(atendimento.codPaciente)" class="visualizar">VISUALIZAR FICHA</button>
           </div>
       </div>
->>>>>>> 8f913cd15cf6942a97ea3ac7ec603fcf122374cb
       
-      <p id="header">HISTÓRICO DE ATENDIMENTO (1)</p>
-      <div class="bloco historico">
+      <p id="header" style="margin-top: 40px;">HISTÓRICO DE ATENDIMENTOS ({{ atendimentosConcluidos.length }})</p>
+      <div class="bloco concluido" v-for="atendimento in atendimentosConcluidos" :key="atendimento.codPaciente">
           <div class="bloco-menor">
-              <p class="numero">Nº 02</p>
-              <button class="visualizar">VISUALIZAR FICHA</button>
+              <p class="numero">Nº {{ atendimento.codPaciente }}</p>
+              <button @click="verFicha(atendimento.codPaciente)" class="visualizar">VISUALIZAR FICHA</button>
           </div>
       </div>
   </div>
@@ -44,14 +30,18 @@ export default {
       SideBarProntuario
   },
   computed: {
-      ...mapState(['atendimentosConcluidos']),
+      ...mapState(['atendimentosConcluidos','atendimentosEmAndamento']),
   },
   methods: {
-    verFicha(){
-        this.$router.push({ name: "ProntuarioDentista", params: { id: this.atendimentosConcluidos[0].codPaciente } })
+    verFicha(codPaciente){
+        this.$router.push({ name: "FichaPaciente", params: { id: codPaciente } });
+    },
+     concluirAtendimento(atendimento) {
+      // Dispara uma ação do Vuex para mover o atendimento
+      this.$store.dispatch('moverParaHistorico', atendimento);
     }
   }
-};
+}
 </script>
 
 <style scoped>

@@ -1,38 +1,61 @@
-import { createStore } from 'vuex';
-import { getPaciente } from '../services/api';  // Importar o método da API
+import { createStore } from 'vuex'
 
 export default createStore({
-
     state: {
         dentesInfo: [],
         frenteActive: true,
-        atendimentosConcluidos: []
+        atendimentosConcluidos: [{
+            nome: "Lukas Rodrigues",
+            cpf: "99999999900",
+            cpfResponsavel:'',
+            dataNascimento:'2005/10/10',
+            contato:"2874821578",
+            sexo:"Masculino",
+            codPaciente:"1"
+          }],
+          atendimentosEmAndamento: [{
+            nome: "Lukas Rodrigues",
+            cpf: "99999999900",
+            cpfResponsavel:'',
+            dataNascimento:'2005/10/10',
+            contato:"2874821578",
+            sexo:"Masculino",
+            codPaciente:"3"
+          }],
+          
     },
 
-    mutations: {
-        showVerso(state) {
+    mutations:{
+        showVerso(state){
             state.frenteActive = false;
         },
-        hideVerso(state) {
+        hideVerso(state){
             state.frenteActive = true;
         },
         ADD_ATENDIMENTO(state, atendimento) {
-            state.atendimentosConcluidos.push(atendimento);
+            state.atendimentosEmAndamento.push(atendimento);
         },
-        SET_PACIENTE_ATUAL(state, paciente) {
-            state.pacienteAtual = paciente; // Armazena o paciente no estado
-        }
-    },
+        MOVE_ATENDIMENTO(state, atendimento) {
+            // Remove o atendimento de "em andamento" e adiciona ao histórico
+            const index = state.atendimentosEmAndamento.indexOf(atendimento);
+            if (index !== -1) {
+              state.atendimentosEmAndamento.splice(index, 1);
+              state.atendimentosConcluidos.push(atendimento);
+            }
+          },
+        },
 
     actions: {
-        async adicionarAtendimento({ commit }, codPaciente) {
-            try {
-                const paciente = await getPaciente(codPaciente); // Busca paciente pela API
-                commit('SET_PACIENTE_ATUAL', paciente); // Armazena o paciente atual no Vuex
-                commit('ADD_ATENDIMENTO', paciente);    // Adiciona o paciente nos atendimentos concluídos
-            } catch (error) {
-                console.error('Erro ao adicionar atendimento:', error);
-            }
-        }
-    }
-});
+        adicionarAtendimento({ commit }, atendimento) {
+          commit('ADD_ATENDIMENTO', atendimento);
+        }, 
+        moverParaHistorico({ commit }, atendimento) {
+            commit('MOVE_ATENDIMENTO', atendimento);
+          },
+        },
+
+    getters: {
+        atendimentosConcluidos: state => state.atendimentosConcluidos,
+        atendimentosEmAndamento: state => state.atendimentosEmAndamento,
+      },
+    });
