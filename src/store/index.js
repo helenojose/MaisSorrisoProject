@@ -3,7 +3,8 @@ import { createStore } from 'vuex'
 export default createStore({
     state: {
         dentesInfo: [],
-        frenteActive: true
+        frenteActive: true,
+        atendimentosConcluidos: []
     },
 
     mutations:{
@@ -12,10 +13,15 @@ export default createStore({
         },
         hideVerso(state){
             state.frenteActive = true;
+        },
+        ADD_ATENDIMENTO(state, atendimento) {
+            state.atendimentosConcluidos.push(atendimento);
         }
     },
 
-    actions:{
-
-    }
+    actions: {
+        adicionarAtendimento({ commit }, atendimento) {
+          commit('ADD_ATENDIMENTO', atendimento);
+        }  
+    }    
 })

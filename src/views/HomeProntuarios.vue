@@ -6,7 +6,7 @@
     </div>
 
     <!-- Área de Conteúdo -->
-   <ListaPaciente/>
+   <ListaPaciente :pacientes-dados="pacientes"/>
    </div>
 </template>
 
@@ -35,6 +35,7 @@ export default {
       // Buscando os pacientes da API
       const response = await getPacientes();
       this.pacientes = response;
+      console.log(this.pacientes)
     } catch (error) {
       console.error("Erro ao carregar pacientes:", error);
     }

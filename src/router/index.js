@@ -3,7 +3,6 @@ import CadastroUsuario from '../views/CadastroUsuario.vue';
 import LoginDentista from '../views/Dentista/LoginDentista.vue';
 import LoginRecepcionista from '../views/Recepcionista/LoginRecepcionista.vue';
 import HomeRecepcionista from '../views/Recepcionista/HomeRecepcionista.vue';
-import ProntuarioDentista from '../views/Dentista/ProntuarioDentista.vue';
 import CadastroPacientes from '../views/Recepcionista/CadastroPacientes';
 import HomeProntuarios from '../views/HomeProntuarios';
 import EditarPaciente from '../views/Recepcionista/EditarPaciente';
@@ -14,7 +13,7 @@ const routes = [
   { path: '/login/recepcionista', name: 'LoginRecepcionista', component: LoginRecepcionista },
   { path: '/home/recepcionista', name: 'HomeRecepcionista', component: HomeRecepcionista },
   { path: '/', redirect: '/Cadastro' } ,
-  {path: '/prontuario/dentista', name: 'ProntuarioDentista', component: ProntuarioDentista},
+  {path: '/prontuario/dentista/:id', name: 'ProntuarioDentista', component: () => import('../views/Dentista/ProntuarioDentista.vue')},
   {path: '/cadastro/pacientes', name: 'CadastroPacientes', component: CadastroPacientes},
   {path: '/home/prontuarios', name: 'HomeProntuarios', component: HomeProntuarios},
   {path: '/editar/paciente', name: 'EditarPaciente', component: EditarPaciente},

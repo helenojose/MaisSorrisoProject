@@ -3,56 +3,54 @@
         <div class="header">
             <div class="infos">
                 <div class="leftInfos">
-                <span>NOME: Lukas Rodrigues da Silva </span>
-                <div class="underLine"></div>
-                <span>CPF: XXX.XXX.XXX-XX
-                </span>
-                <div class="underLine"></div>
-                <span>CPF (Responsável) XXX.XXX.XXX-XX</span>
-                <div class="underLine"></div>
-                <span>CELULAR (XX) XXXXX-XXXX</span>
-                <div class="underLine"></div>
+                    <span>NOME: {{ pacienteDados.nome }} </span>
+                    <div class="underLine"></div>
+                    <span>CPF: {{ pacienteDados.cpf }}</span>
+                    <div class="underLine"></div>
+                    <span>CPF Responsavel: {{ pacienteDados.cpfResponsavel }}</span>
+                    <div class="underLine"></div>
+                    <span>CELULAR: {{ pacienteDados.contato }}</span>
+                    <div class="underLine"></div>
+                </div>
+                <div class="rigthInfos">
+                    <span>N°: {{ pacienteDados.codPaciente }} </span>
+                    <div class="underLine"></div>
+                    <span>SEXO: {{ pacienteDados.sexo }}</span>
+                    <span>IDADE: {{ pacienteDados.idade }}</span>
+                    <div class="underLine"></div>
+                </div>
             </div>
-            <div class="rigthInfos">
-                <span>N°: 02 </span>
-                <div class="underLine"></div>
-                <span>SEXO: F <input type="checkbox"> M<input type="checkbox"></span>
-                <span>IDADE 21</span>
-                <div class="underLine"></div>
-            </div>
-            </div>
-            <div style="display: flex; margin-top: 30px; margin-right: 40px; gap: 10px; cursor: pointer;">
+            <div @click="irHomeProntuario" style="display: flex; margin-top: 30px; margin-right: 40px; gap: 10px; cursor: pointer;">
                 <img class="voltar" src="../img/Voltar - Vermelho.png" alt="">
                 <span class="voltarText">Voltar</span>
             </div>
         </div>
         <div class="infosBody">
             <div class="dentesContainer">
-                <div  class="upLineDentes">
+                <div class="upLineDentes">
                     <div v-for="dente in lineUpDentes" :key="dente.numDente" style="display: flex; position: relative;">
                         <img class="dente" :src="require(`../../public/dentes/${dente.caminhoImg}`)" alt="">
-                        <div @click="setPopUp($event.target)" :class="['UPquadradinhos' , dente.numDente, {'activePontinho' : (!!getDenteStore(dente.numDente) && getDenteStore(dente.numDente).servicos.length > 0 )}]"></div>
+                        <div @click="setPopUp($event.target)" :class="['UPquadradinhos', dente.numDente, {'activePontinho': (!!getDenteStore(dente.numDente) && getDenteStore(dente.numDente).servicos.length > 0)}]"></div>
                     </div>
                 </div>
                 <div class="downLineDentes">
                     <div v-for="dente in lineDownDentes" :key="dente.numDente" style="display: flex; position: relative;">
                         <img class="dente" :src="require(`../../public/dentes/${dente.caminhoImg}`)" alt="">
-                        <div @click="setPopUp($event.target)" :class="['quadradinhos' , dente.numDente, {'activePontinho' : (!!getDenteStore(dente.numDente) && getDenteStore(dente.numDente).servicos.length > 0 )}]"></div>
+                        <div @click="setPopUp($event.target)" :class="['quadradinhos', dente.numDente, {'activePontinho': (!!getDenteStore(dente.numDente) && getDenteStore(dente.numDente).servicos.length > 0)}]"></div>
                     </div>
                 </div>
                 <PopUpDente :id-dente="`${idDente}`" :x="`${denteXPosition}`" :y="`${denteYPosition}`" :display-style="`${popUpDisplay}`"/>
             </div>
-            <div class="radiografia">
-                <span style="color:rgb(189, 189, 189) ; font-size: 24px;">RADIOGRAFIAS</span>
+            <div @click="uploadFile" class="radiografia">
+                <input id="file" type="file" style="display: none;">
+                <span style="color:rgb(189, 189, 189); font-size: 24px;">RADIOGRAFIAS</span>
                 <i class="bi bi-file-earmark-plus-fill"></i>
             </div>
         </div>
         <div class="informationContainers">
-            <div style="width: 480px; display: flex; flex-direction: column; align-items: center; margin-left: 300px;" >
-                <span class="infoText">
-                    CLIQUE NOS CAMPOS CIRCULARES NOS DENTES, PARA FAZER ALTERAÇÕES NO ODONTOGRAMA.
-                </span>
-                <button class="salvarTudoBtn">SALVAR TUDO</button>
+            <div style="width: 480px; display: flex; flex-direction: column; align-items: center; margin-left: 300px;">
+                <span class="infoText">CLIQUE NOS CAMPOS CIRCULARES NOS DENTES, PARA FAZER ALTERAÇÕES NO ODONTOGRAMA.</span>
+                <button @click="salvarTudo" class="salvarTudoBtn">SALVAR TUDO</button>
             </div>
             <div @click="mostrarVerso" style="margin-left: auto; display: flex; align-items: center; gap: 20px; cursor: pointer;">
                 <span style="color: #752025; font-weight: bolder; font-size: 24px;">VERSO</span>
@@ -63,72 +61,86 @@
 </template>
 
 <script>
-    import { mapState } from 'vuex';
-import PopUpDente from '../components/PopUpDente.vue'
-    import dentes1 from '../utils/dentes1.js'
-    import dentes2 from '../utils/dentes2.js'
+import { mapState } from 'vuex';
+import PopUpDente from '../components/PopUpDente.vue';
+import dentes1 from '../utils/dentes1.js';
+import dentes2 from '../utils/dentes2.js';
+import { getPaciente } from '@/services/api';
 
-    export default {
-        data(){
-            return{
-                denteXPosition: String,
-                denteYPosition: String,
-                popUpDisplay: "none",
-                idDente: String,
-                lineUpDentes: [],
-                lineDownDentes: []
+export default {
+    data() {
+        return {
+            denteXPosition: String,
+            denteYPosition: String,
+            popUpDisplay: "none",
+            idDente: String,
+            lineUpDentes: [],
+            lineDownDentes: [],
+            codPaciente: String,
+            pacienteDados: Object
+        };
+    },
+    components: {
+        PopUpDente
+    },
+    methods: {
+        async salvarTudo() {
+            const atendimento = {
+                numero: this.codPaciente,
+                // Adicione outros dados relevantes aqui se necessário
+            };
+            
+            // Dispara a ação do Vuex para adicionar o atendimento
+            this.$store.dispatch('adicionarAtendimento', atendimento);
+            
+            // Feedback visual ao usuário
+            alert("Atendimento salvo com sucesso!");
+        },
+        uploadFile() {
+            document.getElementById('file').click();
+        },
+        irHomeProntuario() {
+            this.$router.push({ name: "HomeProntuarios" });
+        },
+        mostrarVerso() {
+            this.$store.commit('showVerso');
+        },
+        getDenteStore(id) {
+            return this.dentesInfo.find(item => item.denteId == id);
+        },
+        setPopUp(quadradinho) {
+            let coordenadas = quadradinho.getBoundingClientRect();
+            this.popUpDisplay = "grid";
+            this.denteXPosition = `${Math.ceil(coordenadas.x)}`;
+            this.denteYPosition = `${Math.ceil(coordenadas.y - 95)}`;
+            this.idDente = quadradinho.className.split(' ')[1];
+        },
+        hidePopUp(element) {
+            if (element.classList.contains('UPquadradinhos') ||
+                element.classList.contains('quadradinhos') ||
+                element.classList.contains('checkbox') ||
+                element.classList.contains('popUpContainer') ||
+                element.classList.contains('elementContainer') ||
+                element.classList.contains('poptext')) {
+                return;
+            } else {
+                this.popUpDisplay = "none";
             }
-        },
-        components: {
-            PopUpDente
-        },
-        props: {
-            nome: String,
-            cpfDependente: String,
-            cpfResponsavel: String,
-            celular: String,
-            numFicha: String,
-            sexo: String,
-            idade: String
-        },
-        methods: {
-
-            mostrarVerso(){
-                this.$store.commit('showVerso');
-            },
-
-            getDenteStore(id){
-                return this.dentesInfo.find(item => item.denteId == id);
-            },
-
-            setPopUp(quadradinho){
-
-                let coordenadas = quadradinho.getBoundingClientRect();
-                this.popUpDisplay = "grid";
-                this.denteXPosition = `${Math.ceil(coordenadas.x)}`;
-                this.denteYPosition = `${Math.ceil(coordenadas.y - 95)}`;
-                this.idDente = quadradinho.className.split(' ')[1];
-            },
-            hidePopUp(element){
-                if(element.classList.contains('UPquadradinhos')
-                 || element.classList.contains('quadradinhos')
-                 || element.classList.contains('checkbox')
-                 || element.classList.contains('popUpContainer')
-                 || element.classList.contains('elementContainer')
-                 || element.classList.contains('poptext')){
-                    return
-                }else{
-                    this.popUpDisplay = "none";
-                }
-            }
-        },
-        computed: mapState(['dentesInfo', 'versoActive']),
-        async mounted(){
-            this.lineUpDentes = await dentes1
-            this.lineDownDentes = await dentes2
         }
-    }
+    },
+    computed: {
+        ...mapState(['dentesInfo', 'versoActive']),
+    },
+    async mounted() {
+        this.lineUpDentes = await dentes1;
+        this.lineDownDentes = await dentes2;
 
+        this.codPaciente = this.$route.params.id;
+        this.pacienteDados = await getPaciente(this.codPaciente);
+
+        console.log(this.pacienteDados);
+    },
+};
 </script>
 
 <style scoped>

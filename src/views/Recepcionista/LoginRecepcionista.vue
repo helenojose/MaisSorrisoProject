@@ -67,6 +67,7 @@ export default {
 
         // Armazena a sessão e redireciona para a home do recepcionista
         sessionStorage.setItem('isLoggedIn', 'true');
+        sessionStorage.setItem('user', this.login)
         this.$router.push('/cadastro/pacientes');
       } catch (error) {
         alert('Usuário ou senha incorretos!');
