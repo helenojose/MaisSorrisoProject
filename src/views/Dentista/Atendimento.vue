@@ -4,9 +4,9 @@
       <p id="header">PROCEDIMENTO CONCLUÍDO ({{ atendimentosConcluidos.length }})</p>
       <div class="bloco concluido" v-for="atendimento in atendimentosConcluidos" :key="atendimento.numero">
           <div class="bloco-menor">
-              <p class="numero">Nº {{ atendimento.numero }}</p>
+              <p class="numero">Nº {{ atendimento.codPaciente }}</p>
               <button class="atendimento-concluido">ATENDIMENTO CONCLUÍDO</button>
-              <button class="visualizar">VISUALIZAR FICHA</button>
+              <button @click="verFicha" class="visualizar">VISUALIZAR FICHA</button>
           </div>
       </div>
       
@@ -32,6 +32,11 @@ export default {
   computed: {
       ...mapState(['atendimentosConcluidos']),
   },
+  methods: {
+    verFicha(){
+        this.$router.push({ name: "ProntuarioDentista", params: { id: this.atendimentosConcluidos[0].codPaciente } })
+    }
+  }
 };
 </script>
 

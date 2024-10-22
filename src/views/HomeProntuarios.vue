@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { getPacientes } from '../services/api';
+//import { getPacientes } from '../services/api';
 import SideBarProntuario from '@/components/SideBarProntuario.vue';
 import ListaPaciente from '@/components/ListaPaciente.vue';
 
@@ -33,9 +33,19 @@ export default {
   async mounted() {
     try {
       // Buscando os pacientes da API
-      const response = await getPacientes();
-      this.pacientes = response;
-      console.log(this.pacientes)
+      // const response = await getPacientes();
+      // this.pacientes = response;
+      // console.log(this.pacientes)
+
+      this.pacientes = [{
+        nome: "Lukas Rodrigues",
+        cpf: "99999999900",
+        cpfResponsavel:'',
+        dataNascimento:'2005/10/10',
+        contato:"2874821578",
+        sexo:"Masculino",
+        codPaciente:"2"
+      }]
     } catch (error) {
       console.error("Erro ao carregar pacientes:", error);
     }

@@ -65,7 +65,7 @@ import { mapState } from 'vuex';
 import PopUpDente from '../components/PopUpDente.vue';
 import dentes1 from '../utils/dentes1.js';
 import dentes2 from '../utils/dentes2.js';
-import { getPaciente } from '@/services/api';
+//import { getPaciente } from '@/services/api';
 
 export default {
     data() {
@@ -86,7 +86,7 @@ export default {
     methods: {
         async salvarTudo() {
             const atendimento = {
-                numero: this.codPaciente,
+                codPaciente: this.codPaciente,
                 // Adicione outros dados relevantes aqui se necessário
             };
             
@@ -95,6 +95,8 @@ export default {
             
             // Feedback visual ao usuário
             alert("Atendimento salvo com sucesso!");
+
+            this.$router.push({ name: "Atendimento" })
         },
         uploadFile() {
             document.getElementById('file').click();
@@ -136,7 +138,16 @@ export default {
         this.lineDownDentes = await dentes2;
 
         this.codPaciente = this.$route.params.id;
-        this.pacienteDados = await getPaciente(this.codPaciente);
+        this.pacienteDados = [{
+        nome: "Lukas Rodrigues",
+        cpf: "99999999900",
+        cpfResponsavel:'',
+        dataNascimento:'2005/10/10',
+        contato:"2874821578",
+        sexo:"Masculino",
+        codPaciente:"2"
+      }][0]
+        //this.pacienteDados = await getPaciente(this.codPaciente);
 
         console.log(this.pacienteDados);
     },
