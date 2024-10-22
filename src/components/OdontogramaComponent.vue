@@ -1,24 +1,27 @@
 <template>
     <div @click="hidePopUp($event.target)" class="infosContainer">
         <div class="header">
-            <div class="infos">
-                <div class="leftInfos">
-                <span>NOME: Lukas Rodrigues da Silva </span>
-                <div class="underLine"></div>
-                <span>CPF: XXX.XXX.XXX-XX
-                </span>
-                <div class="underLine"></div>
-                <span>CPF (Responsável) XXX.XXX.XXX-XX</span>
-                <div class="underLine"></div>
-                <span>CELULAR (XX) XXXXX-XXXX</span>
-                <div class="underLine"></div>
+            <div class="infos" >
+ 
+                <div class="leftInfos" v-if="paciente">
+                <span>NOME: {{ paciente.nome }} </span>
+                    <div class="underLine"></div>
+                    <span>CPF: {{ paciente.cpf }} </span>
+                    <div class="underLine"></div>
+                    <span>CPF Responsável: {{ paciente.cpfResponsavel }} </span>
+                    <div class="underLine"></div>
+                    <span>CELULAR: {{ paciente.contato }} </span>
+                    <div class="underLine"></div>
+
             </div>
-            <div class="rigthInfos">
-                <span>N°: 02 </span>
-                <div class="underLine"></div>
-                <span>SEXO: F <input type="checkbox"> M<input type="checkbox"></span>
-                <span>IDADE 21</span>
-                <div class="underLine"></div>
+            <div class="rigthInfos" v-if="paciente">
+
+                    <span>N°{{ paciente.codPaciente }} </span>
+                    <div class="underLine"></div>
+                    <span>SEXO: {{ paciente.sexo }} </span>
+                    <span>IDADE: {{ paciente.idade }} </span>
+                    <div class="underLine"></div>
+
             </div>
             </div>
             <div style="display: flex; margin-top: 30px; margin-right: 40px; gap: 10px; cursor: pointer;">
@@ -67,6 +70,7 @@
 import PopUpDente from '../components/PopUpDente.vue'
     import dentes1 from '../utils/dentes1.js'
     import dentes2 from '../utils/dentes2.js'
+    import getPaciente from '../services/api'
 
     export default {
         data(){
@@ -76,7 +80,8 @@ import PopUpDente from '../components/PopUpDente.vue'
                 popUpDisplay: "none",
                 idDente: String,
                 lineUpDentes: [],
-                lineDownDentes: []
+                lineDownDentes: [],
+                paciente: null
             }
         },
         components: {
@@ -126,7 +131,16 @@ import PopUpDente from '../components/PopUpDente.vue'
         async mounted(){
             this.lineUpDentes = await dentes1
             this.lineDownDentes = await dentes2
-        }
+        },
+        async created() {
+            const codPaciente = this.$route.params.id; // Pegando o ID da URL
+            try {
+                const paciente = await getPaciente(codPaciente); // Busca o paciente pelo ID via API
+                this.paciente = paciente; // Armazena o paciente
+            } catch (error) {
+                console.error("Erro ao buscar paciente:", error);
+            }
+        },    
     }
 
 </script>

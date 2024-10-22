@@ -140,10 +140,7 @@ export default {
   data() {
     return {
       search: "",
-      pacientes: [
-        { codPaciente: 1, nome: "João Silva", contato: "123456789" },
-        { codPaciente: 2, nome: "Maria Oliveira", contato: "987654321" }
-      ]
+      pacientes: []
     };
   },
   computed: {
